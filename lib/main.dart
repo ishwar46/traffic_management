@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:remittonepal/presentation/login/login_page.dart';
+import 'package:remittonepal/presentation/OnBoarding/onboarding_screen.dart';
 import 'package:remittonepal/routes.dart';
 import 'package:remittonepal/utils/theme.dart';
 
 void main() {
+  //status bar color
   runApp(const MyApp());
 }
 
@@ -14,12 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'SmartTrafficNepal',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       initialRoute: Routes.onboardingRoute,
       onGenerateRoute: Routes.generateRoute,
-      home: const LoginPage(),
+      home: const OnBoardingScreen(),
     );
   }
 }

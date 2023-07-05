@@ -17,18 +17,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   final onBoardData = [
     const OnBoardModel(
-        title: "Cash Pickup",
-        description: "Instant cash to the customers with ease",
+        title: "Traffic Light Syncronization",
+        description: "Traffic light syncronization for smooth traffic flow.",
         imgUrl: "assets/B1.png"),
     const OnBoardModel(
-        title: "Agent Location",
+        title: "Live Tracking",
         description:
-            "Allows you to access real-time location information for agents in your vicinity.",
+            "Live tracking of traffic light and traffic flow for better traffic management.",
         imgUrl: "assets/B2.png"),
     const OnBoardModel(
-        title: "Exchange Rate",
-        description: "Sender can send money direct to our partner wallet.",
-        imgUrl: "assets/B3.png")
+        title: "Traffic Management",
+        description: "Traffic management for better traffic flow.",
+        imgUrl: "assets/B1.png")
   ];
   bool isLastPage = false;
   @override

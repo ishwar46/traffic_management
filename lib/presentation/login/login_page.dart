@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:remittonepal/presentation/home/ui/home_page.dart';
 import 'package:remittonepal/utils/app_colors.dart';
 import 'package:remittonepal/utils/dimension.dart';
 import 'package:remittonepal/utils/widgets/input_textfield.dart';
 import 'package:remittonepal/utils/widgets/rounded_button.dart';
+
+import '../home/ui/traffic_light.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -106,7 +109,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               CustomRoundedButtom(
                 title: "Sign In",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrafficLightManagementSystem(),
+                    ),
+                  );
+                },
                 verticalPadding: 10,
               ),
               const SizedBox(
