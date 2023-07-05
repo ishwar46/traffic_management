@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:remittonepal/presentation/home/ui/home_page.dart';
 import 'package:remittonepal/utils/app_colors.dart';
@@ -17,129 +18,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final LocalAuthentication auth = LocalAuthentication();
-  _SupportState _supportState = _SupportState.unknown;
-  bool? _canCheckBiometrics;
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
+LocalAuthentication localAuthentication = LocalAuthentication();
+  bool? hasBiometrics = false;
+  bool? fingerprintEnabled = false;
+  DateTime currentBackPressTime = DateTime.now();
+  var jsonDecoded;
+  bool _passwordVisible = false;
+  bool _supportState = false;
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    auth.isDeviceSupported().then(
-          (bool isSupported) => setState(() => _supportState = isSupported
-              ? _SupportState.supported
-              : _SupportState.unsupported),
-        );
-
+    _authenticate();
+    
   }
-
-  // Future<void> _checkBiometrics() async {
-  //   late bool canCheckBiometrics;
-  //   try {
-  //     canCheckBiometrics = await auth.canCheckBiometrics;
-  //   } on PlatformException catch (e) {
-  //     canCheckBiometrics = false;
-  //     print(e);
-  //   }
-  //   if (!mounted) {
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     _canCheckBiometrics = canCheckBiometrics;
-  //   });
-  // }
-
-  // Future<void> _cancelAuthentication() async {
-  //   await auth.stopAuthentication();
-  //   setState(() => _isAuthenticating = false);
-  // }
-
-  // Future<void> _getAvailableBiometrics() async {
-  //   late List<BiometricType> availableBiometrics;
-  //   try {
-  //     availableBiometrics = await auth.getAvailableBiometrics();
-  //   } on PlatformException catch (e) {
-  //     availableBiometrics = <BiometricType>[];
-  //     print(e);
-  //   }
-  //   if (!mounted) {
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     _availableBiometrics = availableBiometrics;
-  //   });
-  // }
-
-  // Future<void> _authenticate() async {
-  //   bool authenticated = false;
-  //   try {
-  //     setState(() {
-  //       _isAuthenticating = true;
-  //       _authorized = 'Authenticating';
-  //     });
-  //     authenticated = await auth.authenticate(
-  //       localizedReason: 'Let OS determine authentication method',
-  //       options: const AuthenticationOptions(
-  //         stickyAuth: true,
-  //       ),
-  //     );
-  //     setState(() {
-  //       _isAuthenticating = false;
-  //     });
-  //   } on PlatformException catch (e) {
-  //     print(e);
-  //     setState(() {
-  //       _isAuthenticating = false;
-  //       _authorized = 'Error - ${e.message}';
-  //     });
-  //     return;
-  //   }
-  //   if (!mounted) {
-  //     return;
-  //   }
-
-  //   setState(
-  //       () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
-  // }
-
-  // Future<void> _authenticateWithBiometrics() async {
-  //   bool authenticated = false;
-  //   try {
-  //     setState(() {
-  //       _isAuthenticating = true;
-  //       _authorized = 'Authenticating';
-  //     });
-  //     authenticated = await auth.authenticate(
-  //       localizedReason:
-  //           'Scan your fingerprint (or face or whatever) to authenticate',
-  //     );
-  //     setState(() {
-  //       _isAuthenticating = false;
-  //       _authorized = 'Authenticated';
-  //     });
-
-  //     if (authenticated) {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) =>
-  //               TrafficLightManagementSystem(), // Replace NextPage with your desired destination
-  //         ),
-  //       );
-  //     }
-  //   } on PlatformException catch (e) {
-  //     print(e);
-  //     setState(() {
-  //       _isAuthenticating = false;
-  //       _authorized = 'Error - ${e.message}';
-  //     });
-  //     return;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                   
+                   _authenticate;
                   },
                   child: Column(
                     children: [
@@ -307,10 +206,39 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+  Future<void> _authenticate() async {
+    try {
+      bool authenticated = await localAuthentication.authenticate(
+        localizedReason: "Scan your fingerprint to authenticate",
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+          biometricOnly: true,
+        ),
+      );
+      print("Authenticated: $authenticated");
+
+      // Once authentication is successful, perform the login operation
+      if (authenticated) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TrafficLightManagementSystem(),
+          ),
+        );
+      }
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _getAvilableBiometrics() async {
+    await localAuthentication.getAvailableBiometrics();
+
+    print("List of biometrics: $hasBiometrics");
+
+    if (!mounted) {
+      return;
+    }
+  }
 }
 
-enum _SupportState {
-  unknown,
-  supported,
-  unsupported,
-}
