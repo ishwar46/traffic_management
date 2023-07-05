@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:remittonepal/presentation/OnBoarding/onboarding_screen.dart';
 import 'package:remittonepal/routes.dart';
 import 'package:remittonepal/utils/theme.dart';
 
+import 'utils/app_colors.dart';
+
 void main() {
-  //status bar color
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor),
+  );
+
   runApp(const MyApp());
 }
 
