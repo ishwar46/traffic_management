@@ -32,6 +32,10 @@ class _LoginPageState extends State<LoginPage> {
               ? _SupportState.supported
               : _SupportState.unsupported),
         );
+
+    _authenticateWithBiometrics();
+    _cancelAuthentication();
+    _checkBiometrics();
   }
 
   Future<void> _checkBiometrics() async {
@@ -49,6 +53,11 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _canCheckBiometrics = canCheckBiometrics;
     });
+  }
+
+  Future<void> _cancelAuthentication() async {
+    await auth.stopAuthentication();
+    setState(() => _isAuthenticating = false);
   }
 
   Future<void> _getAvailableBiometrics() async {
