@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.uranusapp.remittonepal.remittonepal">
+    package="com.closedai.smart.traffic">
    <application
         android:label="SmartTrafficNepal"
         android:name="${applicationName}"
