@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remittonepal/presentation/login/login_page.dart';
 import 'package:remittonepal/utils/app_colors.dart';
 
 enum LightState {
@@ -143,10 +144,22 @@ class _TrafficLightManagementSystemState
         backgroundColor: AppColors.primaryColor,
         elevation: 0.0,
         title: Text('Dashboard'),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {},
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: refreshTrafficLights,
+          ),
+          IconButton(
+            icon: Icon(Icons.logout_rounded),
+            onPressed: (
+
+            ) {
+              _logout();
+            },
           ),
         ],
       ),
@@ -222,6 +235,15 @@ class _TrafficLightManagementSystemState
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _logout() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginPage(),
       ),
     );
   }
