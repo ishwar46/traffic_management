@@ -1,132 +1,238 @@
 // import 'package:flutter/material.dart';
+// import 'package:flutter/src/widgets/framework.dart';
+// import 'package:flutter/src/widgets/placeholder.dart';
 
-// class TrafficLight {
-//   String id;
-//   Color color;
-//   bool isOn;
+// class MyWidget extends StatefulWidget {
+//   const MyWidget({super.key});
 
-//   TrafficLight({required this.id, required this.color, required this.isOn});
-// }
-
-// class TrafficLightManagementSystem extends StatefulWidget {
 //   @override
-//   _TrafficLightManagementSystemState createState() =>
-//       _TrafficLightManagementSystemState();
+//   State<MyWidget> createState() => _MyWidgetState();
 // }
 
-// class _TrafficLightManagementSystemState
-//     extends State<TrafficLightManagementSystem> {
-//   List<TrafficLight> trafficLights = [
-//     TrafficLight(id: '1', color: Colors.red, isOn: true),
-//     TrafficLight(id: '2', color: Colors.green, isOn: false),
-//     TrafficLight(id: '3', color: Colors.yellow, isOn: false),
-//   ];
-
-//   void toggleLight(String id) {
-//     setState(() {
-//       trafficLights.forEach((light) {
-//         if (light.id == id) {
-//           light.isOn = !light.isOn;
-//         } else {
-//           light.isOn = false;
-//         }
-//       });
-//     });
-//   }
-
+// class _MyWidgetState extends State<MyWidget> {
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Smart Traffic Light Management System'),
-//       ),
-//       body: HomePage(), // Replaced with HomePage widget
-//     );
-//   }
-// }
+//    return Scaffold(
+//     appBar: AppBar(
+     
+//       actions: [
 
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
+//     ]),
 
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
-
-// class _HomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Dashboard'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           children: [
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Expanded(
-//                   child: Card(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(16.0),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Text(
-//                             'Total Vehicles',
-//                             style: TextStyle(
-//                               fontSize: 16,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                           SizedBox(height: 8),
-//                           Text(
-//                             '1,234',
-//                             style: TextStyle(
-//                               fontSize: 24,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
+//     body: Column(
+//                 children: [
+//                             Container(
+//                     width: 430,
+//                     height: 134,
+//                     decoration:     BoxDecoration(
+//                 color: Color(0xff05559e))
 //                     ),
-//                   ),
-//                 ),
-//                 Expanded(
-//                   child: Card(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(16.0),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
+//         Row(
 //                         children: [
-//                           Text(
-//                             'Active Routes',
+//                                     Text(
+//                             "Dashboard",
 //                             style: TextStyle(
-//                               fontSize: 16,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                           SizedBox(height: 8),
-//                           Text(
-//                             '567',
-//                             style: TextStyle(
-//                               fontSize: 24,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
+//                                 fontSize: 20,
+//                                 fontWeight: FontWeight.w700,
+//                             )
+//                         )
 //                         ],
-//                       ),
 //                     ),
-//                   ),
-//                 ),
-//               ],
+//         Column(
+//                         children: [
+//                                     Container(
+//                         width: 18,
+//                         height: 18,
+//                         )
+//                         ],
+//                     ),
+//         Column(
+//                         children: [
+//                                     Container(
+//                         width: 16,
+//                         height: 16,
+//                         )
+//                         ],
+//                     ),
+//         Column(
+//                         children: [
+//                                     Container(
+//                         width: 18,
+//                         height: 12,
+//                         )
+//                         ],
+//                     ),
+//         Row(
+//                         children: [
+//                                     Text(
+//                             "Lane : 1",
+//                             style: TextStyle(
+//                                 fontSize: 20,
+//                                 fontWeight: FontWeight.w700,
+//                             )
+//                         )
+//                         ],
+//                     ),
+//         Column(
+//                         children: [
+//                                     Container(
+//                             width: 388,
+//                             height: 60,
+//                             decoration:     BoxDecoration(
+//                         color: Color(0xfff7f7f7))
+//                             ),
+//                 Container(
+//                             width: 388,
+//                             height: 60,
+//                             decoration:     BoxDecoration(
+//                         color: Color(0xfff7f7f7))
+//                             ),
+//                 Container(
+//                             width: 388,
+//                             height: 60,
+//                             decoration:     BoxDecoration(
+//                         color: Color(0xfff7f7f7))
+//                             ),
+//                 Image.asset(
+//                             "assets/Ellipse 1.png",
+//                             width: 42,
+//                             height: 42,
+//                             ),
+//                 Image.asset(
+//                             "assets/Ellipse 4.png",
+//                             width: 10,
+//                             height: 10,
+//                             ),
+//                 Image.asset(
+//                             "assets/Ellipse 2.png",
+//                             width: 42,
+//                             height: 42,
+//                             ),
+//                 Image.asset(
+//                             "assets/Ellipse 3.png",
+//                             width: 42,
+//                             height: 42,
+//                             ),
+//                 Image.asset(
+//                             "assets/Ellipse 5.png",
+//                             width: 10,
+//                             height: 10,
+//                             ),
+//                 Image.asset(
+//                             "assets/Ellipse 6.png",
+//                             width: 10,
+//                             height: 10,
+//                             ),
+//                 Row(
+//                                 children: [
+//                                             Text(
+//                                     "Light 1",
+//                                     style: TextStyle(
+//                                         fontSize: 20,
+//                                         fontWeight: FontWeight.w600,
+//                                     )
+//                                 )
+//                                 ],
+//                             ),
+//                 Row(
+//                                 children: [
+//                                             Text(
+//                                     "Light 2",
+//                                     style: TextStyle(
+//                                         fontSize: 20,
+//                                         fontWeight: FontWeight.w600,
+//                                     )
+//                                 )
+//                                 ],
+//                             ),
+//                 Row(
+//                                 children: [
+//                                             Text(
+//                                     "Light 3",
+//                                     style: TextStyle(
+//                                         fontSize: 20,
+//                                         fontWeight: FontWeight.w600,
+//                                     )
+//                                 )
+//                                 ],
+//                             ),
+//                 Stack(children: [    Column(
+//                                         children: [
+//                                                     Column(
+//                                                 children: [
+//                                                             Container(
+//                                                     width: 42.22222137451172,
+//                                                     height: 19,
+//                                                     decoration:     BoxDecoration(
+//                                                 borderRadius: BorderRadius.circular(50), 
+//                                                 color: Color(0xff76ee58))
+//                                                     )
+//                                                 ],
+//                                             )
+//                                         ],
+//                                     ),
+//                         Column(
+//                                         children: [
+//                                                     Image.asset(
+//                                             "assets/Ellipse 1.png",
+//                                             width: 14.777778625488281,
+//                                             height: 14.777778625488281,
+//                                             )
+//                                         ],
+//                                     )],),
+//                 Stack(children: [    Column(
+//                                         children: [
+//                                                     Column(
+//                                                 children: [
+//                                                             Container(
+//                                                     width: 40,
+//                                                     height: 18,
+//                                                     decoration:     BoxDecoration(
+//                                                 borderRadius: BorderRadius.circular(50), 
+//                                                 color: Color(0xffeeeeee))
+//                                                     )
+//                                                 ],
+//                                             )
+//                                         ],
+//                                     ),
+//                         Column(
+//                                         children: [
+//                                                     Image.asset(
+//                                             "assets/Ellipse 1.png",
+//                                             width: 14,
+//                                             height: 14,
+//                                             )
+//                                         ],
+//                                     )],),
+//                 Stack(children: [    Column(
+//                                         children: [
+//                                                     Column(
+//                                                 children: [
+//                                                             Container(
+//                                                     width: 40,
+//                                                     height: 18,
+//                                                     decoration:     BoxDecoration(
+//                                                 borderRadius: BorderRadius.circular(50), 
+//                                                 color: Color(0xffeeeeee))
+//                                                     )
+//                                                 ],
+//                                             )
+//                                         ],
+//                                     ),
+//                         Column(
+//                                         children: [
+//                                                     Image.asset(
+//                                             "assets/Ellipse 1.png",
+//                                             width: 14,
+//                                             height: 14,
+//                                             )
+//                                         ],
+//                                     )],)
+//                         ],
+//                     )
+//                 ],
 //             ),
-//             SizedBox(height: 16),
-//           ],
-//         ),
-//       ),
-//     );
+
+//    );
 //   }
 // }

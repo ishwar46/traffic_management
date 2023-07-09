@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       initialRoute: MyRoutes.onboardingRoute,
       routes: {
-        "/": (context) => const LoginPage(),
-       MyRoutes.changepassRoute: (context) => const LoginPage(),
+        "/": (context) =>  LoginPage(),
+       MyRoutes.changepassRoute: (context) =>  LoginPage(),
         MyRoutes.onboardingRoute: (context) => const OnBoardingScreen(),
 
         
