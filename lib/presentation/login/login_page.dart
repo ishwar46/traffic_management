@@ -1,4 +1,6 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:remittonepal/presentation/register/register_page.dart';
 import '../../utils/widgets/input_textfield.dart';
 import '../components/custom_button.dart';
 import '../components/page_header.dart';
@@ -40,6 +42,9 @@ class _LoginPageState extends State<LoginPage> {
                             validator: (textValue) {
                               if(textValue == null || textValue.isEmpty) {
                                 return 'Email is required!';
+                              }
+                              if(!EmailValidator.validate(textValue)) {
+                                return 'Please enter a valid email';
                               }
                               return null;
                             }
@@ -85,9 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 const Text('Don\'t have an account ? ', style: TextStyle(fontSize: 13, color: Color(0xff939393), fontWeight: FontWeight.bold),),
                                 GestureDetector(
-                                  // onTap: () => {
-                                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupPage()))
-                                  // },
+                                  onTap: () => {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()))
+                                  },
                                   child: const Text('Sign-up', style: TextStyle(fontSize: 15, color: Color(0xff748288), fontWeight: FontWeight.bold),),
                                 ),
                               ],
