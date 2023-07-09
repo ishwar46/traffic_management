@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:smartftraffic/presentation/home/ui/traffic_light.dart';
 import 'package:smartftraffic/presentation/register/register_page.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/widgets/input_textfield.dart';
@@ -162,7 +163,11 @@ class _LoginPageState extends State<LoginPage> {
   void _handleLoginUser() {
     // login user
     if (_loginFormKey.currentState!.validate()) {
-      Navigator.pushNamed(context, '/home');
+      //home page
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => new TrafficLightManagementSystem()));
     }
   }
 }
