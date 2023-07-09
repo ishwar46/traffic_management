@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:remittonepal/presentation/login/login_page.dart';
-import 'package:remittonepal/utils/app_colors.dart';
+import 'package:smartftraffic/presentation/login/login_page.dart';
+
+import '../../../utils/app_colors.dart';
 
 enum LightState {
   red,

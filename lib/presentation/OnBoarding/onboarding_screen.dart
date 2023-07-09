@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
-import 'package:remittonepal/presentation/home/ui/home_page.dart';
-import 'package:remittonepal/presentation/login/login_page.dart';
 
-import 'package:remittonepal/utils/app_colors.dart';
+
+import '../../utils/app_colors.dart';
+import '../login/login_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});

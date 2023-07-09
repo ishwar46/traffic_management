@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:remittonepal/presentation/components/custom_button.dart';
+import 'package:smartftraffic/presentation/components/custom_button.dart';
 
 import '../../utils/widgets/input_textfield.dart';
 import '../components/page_header.dart';
@@ -47,8 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xffEEF1F3),
         body: SingleChildScrollView(
           child: Form(
@@ -176,7 +175,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
-      ),
     );
   }
 }

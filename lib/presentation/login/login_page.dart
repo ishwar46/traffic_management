@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:remittonepal/presentation/register/register_page.dart';
+import 'package:smartftraffic/presentation/register/register_page.dart';
+import '../../utils/app_colors.dart';
 import '../../utils/widgets/input_textfield.dart';
 import '../components/custom_button.dart';
 import '../components/page_header.dart';
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   //
   final _loginFormKey = GlobalKey<FormState>();
-
+  String? versionName;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const Text('Don\'t have an account ? ', style: TextStyle(fontSize: 13, color: Color(0xff939393), fontWeight: FontWeight.bold),),
                                 GestureDetector(
                                   onTap: () => {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()))
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()))
                                   },
                                   child: const Text('Sign-up', style: TextStyle(fontSize: 15, color: Color(0xff748288), fontWeight: FontWeight.bold),),
                                 ),
@@ -105,6 +106,22 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                "© ${DateTime.now().year} Uranus HRM",
+                                style: const TextStyle(
+                                    color: AppColors.primaryColor, fontSize: 12),
+                              ),
+                              Text(
+                                "Version $versionName",
+                                style: const TextStyle(
+                                    color: AppColors.primaryColor, fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
             ],
           ),
         );

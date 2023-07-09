@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:remittonepal/utils/app_colors.dart';
+import 'package:smartftraffic/utils/app_colors.dart';
 
 var lightTheme = ThemeData(
   fontFamily: GoogleFonts.nunito().fontFamily,

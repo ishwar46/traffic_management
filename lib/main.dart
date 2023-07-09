@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:remittonepal/presentation/OnBoarding/onboarding_screen.dart';
-import 'package:remittonepal/routes.dart';
-import 'package:remittonepal/utils/theme.dart';
+import 'package:smartftraffic/presentation/OnBoarding/onboarding_screen.dart';
+import 'package:smartftraffic/routes.dart';
+import 'package:smartftraffic/utils/theme.dart';
 import 'presentation/login/login_page.dart';
 import 'utils/app_colors.dart';
 
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) =>  LoginPage(),
        MyRoutes.changepassRoute: (context) =>  LoginPage(),
-        MyRoutes.onboardingRoute: (context) => const OnBoardingScreen(),
+       MyRoutes.onboardingRoute: (context) =>  OnBoardingScreen(),
 
         
       },
