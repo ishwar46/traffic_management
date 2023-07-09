@@ -1,244 +1,116 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:remittonepal/presentation/home/ui/home_page.dart';
-import 'package:remittonepal/utils/app_colors.dart';
-import 'package:remittonepal/utils/dimension.dart';
-import 'package:remittonepal/utils/widgets/input_textfield.dart';
-import 'package:remittonepal/utils/widgets/rounded_button.dart';
-
-import '../home/ui/traffic_light.dart';
-
+import '../../utils/widgets/input_textfield.dart';
+import '../components/custom_button.dart';
+import '../components/page_header.dart';
+import '../components/page_heading.dart';
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-LocalAuthentication localAuthentication = LocalAuthentication();
-  bool? hasBiometrics = false;
-  bool? fingerprintEnabled = false;
-  DateTime currentBackPressTime = DateTime.now();
-  var jsonDecoded;
-  bool _passwordVisible = false;
-  bool _supportState = false;
-
-  @override
-  void setState(fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _authenticate();
-    
-  }
+  //
+  final _loginFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: Row(
-          children: [
-            const SizedBox(
-              width: 8,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_back_ios_new_sharp,
-              ),
-              color: AppColors.primaryColor,
-              iconSize: 26,
-            ),
-          ],
-        ),
-        backgroundColor: AppColors.white,
-        elevation: 0,
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        height: Dimension.screenHeight,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          backgroundColor: const Color(0xffEEF1F3),
+          body: Column(
             children: [
-              const SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                child: RichText(
-                    text: TextSpan(
-                        text: "Welcome\nto",
-                        style: textTheme.displaySmall!
-                            .copyWith(color: AppColors.textBlack, fontSize: 30),
+              const PageHeader(),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20),),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _loginFormKey,
+                      child: Column(
                         children: [
-                      TextSpan(
-                          text: " Smart",
-                          style: textTheme.displaySmall!.copyWith(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor)),
-                      TextSpan(
-                          text: " Traffic",
-                          style: textTheme.displaySmall!.copyWith(
-                              fontSize: 30,
-                              color: AppColors.red,
-                              fontWeight: FontWeight.bold)),
-                      TextSpan(
-                          text: " Nepal",
-                          style: textTheme.displaySmall!.copyWith(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor)),
-                    ])),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Log into your account",
-                style:
-                    textTheme.labelLarge!.copyWith(color: AppColors.blackLight),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const CustomTextField(
-                label: "Phone Number",
-                hintText: "",
-              ),
-              const CustomTextField(
-                label: "Password",
-                hintText: "",
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Forget Password?",
-                  style: textTheme.titleSmall!.copyWith(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              CustomRoundedButtom(
-                title: "Sign In",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TrafficLightManagementSystem(),
-                    ),
-                  );
-                },
-                verticalPadding: 10,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Center(
-                child: Text("Or"),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                   _authenticate;
-                  },
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 57,
-                        width: 57,
-                        child: Image.asset("assets/img/face.png"),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Login with Face ID",
-                        style: textTheme.titleSmall,
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "Don’t have an account? ",
-                          style: textTheme.labelLarge!
-                              .copyWith(color: AppColors.textLight),
-                          children: [
-                            TextSpan(
-                              text: "Register ",
-                              style: textTheme.titleSmall!.copyWith(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold,
+                          const PageHeading(title: 'Log-in',),
+                          CustomInputField(
+                            labelText: 'Email',
+                            hintText: 'Your email id',
+                            validator: (textValue) {
+                              if(textValue == null || textValue.isEmpty) {
+                                return 'Email is required!';
+                              }
+                              return null;
+                            }
+                          ),
+                          const SizedBox(height: 16,),
+                          CustomInputField(
+                            labelText: 'Password',
+                            hintText: 'Your password',
+                            obscureText: true,
+                            suffixIcon: true,
+                            validator: (textValue) {
+                              if(textValue == null || textValue.isEmpty) {
+                                return 'Password is required!';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16,),
+                          Container(
+                            width: size.width * 0.80,
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              // onTap: () => {
+                              //   Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgetPasswordPage()))
+                              // },
+                              child: const Text(
+                                'Forget password?',
+                                style: TextStyle(
+                                  color: Color(0xff939393),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                            TextSpan(
-                              text: "here.",
-                              style: textTheme.labelLarge!
-                                  .copyWith(color: AppColors.textLight),
+                          ),
+                          const SizedBox(height: 20,),
+                          CustomFormButton(innerText: 'Login', onPressed: _handleLoginUser,),
+                          const SizedBox(height: 18,),
+                          SizedBox(
+                            width: size.width * 0.8,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Don\'t have an account ? ', style: TextStyle(fontSize: 13, color: Color(0xff939393), fontWeight: FontWeight.bold),),
+                                GestureDetector(
+                                  // onTap: () => {
+                                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupPage()))
+                                  // },
+                                  child: const Text('Sign-up', style: TextStyle(fontSize: 15, color: Color(0xff748288), fontWeight: FontWeight.bold),),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 20,),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-  Future<void> _authenticate() async {
-    try {
-      bool authenticated = await localAuthentication.authenticate(
-        localizedReason: "Scan your fingerprint to authenticate",
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-          biometricOnly: true,
-        ),
-      );
-      print("Authenticated: $authenticated");
-
-      // Once authentication is successful, perform the login operation
-      if (authenticated) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TrafficLightManagementSystem(),
-          ),
         );
-      }
-    } on PlatformException catch (e) {
-      print(e);
-    }
   }
 
-  Future<void> _getAvilableBiometrics() async {
-    await localAuthentication.getAvailableBiometrics();
-
-    print("List of biometrics: $hasBiometrics");
-
-    if (!mounted) {
-      return;
+  void _handleLoginUser() {
+    // login user
+    if (_loginFormKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Submitting data..')),
+      );
     }
   }
 }
-

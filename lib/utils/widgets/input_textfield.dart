@@ -1,99 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:remittonepal/utils/app_colors.dart';
 
-import '../dimension.dart';
-
-class CustomTextField extends StatelessWidget {
-  final String label;
+class CustomInputField extends StatefulWidget {
+  final String labelText;
   final String hintText;
-  final double bottomPadding;
+  final String? Function(String?) validator;
+  final bool suffixIcon;
+  final bool? isDense;
   final bool obscureText;
-  final bool readOnly;
 
-  final TextEditingController? controller;
-  final FormFieldValidator<String>? validator;
-
-  const CustomTextField({
-    super.key,
-    required this.label,
+  const CustomInputField({
+    Key? key,
+    required this.labelText,
     required this.hintText,
-    this.bottomPadding = 16,
-    this.obscureText = false,
-    this.readOnly = false,
-    this.controller,
-    this.validator,
-  });
+    required this.validator,
+    this.suffixIcon = false,
+    this.isDense,
+    this.obscureText = false
+  }) : super(key: key);
+
+  @override
+  State<CustomInputField> createState() => _CustomInputFieldState();
+}
+
+class _CustomInputFieldState extends State<CustomInputField> {
+  //
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-
+    Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(bottom: bottomPadding),
+      width: size.width * 0.9,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (label.isNotEmpty)
-            Text(
-              label,
-              style: textTheme.titleSmall!.copyWith(
-                  fontWeight: FontWeight.w600, color: AppColors.textLight
-                  //fontSize: 14,
-                  ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(widget.labelText, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+          ),
+          TextFormField(
+            obscureText: (widget.obscureText && _obscureText),
+            decoration: InputDecoration(
+              isDense: (widget.isDense != null) ? widget.isDense : false,
+              hintText: widget.hintText,
+              suffixIcon: widget.suffixIcon ? IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.remove_red_eye : Icons.visibility_off_outlined,
+                  color: Colors.black54,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              ): null,
+              suffixIconConstraints: (widget.isDense != null) ? const BoxConstraints(
+                  maxHeight: 33
+              ): null,
             ),
-          if (label.isNotEmpty) const SizedBox(height: 10),
-          SizedBox(
-            height: 50,
-            child: TextFormField(
-              style: textTheme.labelLarge!
-                  .copyWith(color: AppColors.textBlack, fontSize: 15),
-              controller: controller,
-              showCursor: false,
-              maxLines: 1,
-              obscureText: obscureText,
-              readOnly: readOnly,
-              validator: validator,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: AppColors.blackLight),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Colors.red),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: AppColors.blackLight),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: AppColors.blackLight),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: AppColors.blackLight),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: AppColors.blackLight),
-                ),
-                fillColor: AppColors.white,
-                filled: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 12,
-                ),
-                counterText: "",
-                hintText: hintText,
-                hintStyle: textTheme.titleLarge!.copyWith(
-                  color: AppColors.textLight.withOpacity(0.2),
-                  fontSize: 14,
-                ),
-                isDense: true,
-              ),
-            ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: widget.validator,
           ),
         ],
       ),
