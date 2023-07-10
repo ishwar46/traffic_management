@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartftraffic/utils/app_colors.dart';
 
 class CustomFormButton extends StatelessWidget {
   final String innerText;
@@ -9,10 +10,11 @@ class CustomFormButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width * 0.8,
+      width: 360,
+      height: 50,
       decoration: BoxDecoration(
-        color: const Color(0xff233743),
-        borderRadius: BorderRadius.circular(26),
+        color: AppColors.primaryColor,
+         borderRadius: BorderRadius.circular(10),
       ),
       child: TextButton(
         onPressed: onPressed,

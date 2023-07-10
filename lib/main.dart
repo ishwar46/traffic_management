@@ -1,5 +1,10 @@
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:smartftraffic/presentation/OnBoarding/onboarding_screen.dart';
 import 'package:smartftraffic/routes.dart';
@@ -7,13 +12,40 @@ import 'package:smartftraffic/utils/theme.dart';
 import 'presentation/login/login_page.dart';
 import 'utils/app_colors.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor),
+      const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
+  await Firebase.initializeApp();
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  } else {
+    FirebaseCrashlytics.instance.app.setAutomaticDataCollectionEnabled(true);
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  }
+  runApp(
+    EasyDynamicThemeWidget(child: const MyApp()),
   );
+  configLoading();
+}
 
-  runApp(const MyApp());
+void configLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..backgroundColor = Colors.black38
+    ..indicatorColor = Colors.white
+    ..textColor = Colors.white
+    ..maskType = EasyLoadingMaskType.black
+    ..maskColor = Colors.transparent
+    ..indicatorColor = AppColors.primaryColor
+    ..textStyle = const TextStyle(
+      color: Colors.white,
+    )
+    ..userInteractions = false
+    ..fontSize = 12
+    ..indicatorSize = 30.0
+    ..dismissOnTap = false;
 }
 
 class MyApp extends StatelessWidget {
