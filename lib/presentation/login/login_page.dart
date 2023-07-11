@@ -1,5 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:smartftraffic/presentation/home/ui/home_page.dart';
 import 'package:smartftraffic/presentation/home/ui/traffic_light.dart';
 import 'package:smartftraffic/presentation/register/register_page.dart';
 import '../../utils/app_colors.dart';
@@ -42,7 +44,18 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         const PageHeading(
-                          title: 'Log-in',
+                          title: 'Smart Traffic Nepal',
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'Login',
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         CustomInputField(
                             labelText: 'Email',
@@ -165,11 +178,13 @@ class _LoginPageState extends State<LoginPage> {
   void _handleLoginUser() {
     // login user
     if (_loginFormKey.currentState!.validate()) {
-      //home page
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => new TrafficLightManagementSystem()));
+      //easyLoading
+      EasyLoading.show(status: 'loading...');
+      Future.delayed(const Duration(seconds: 2), () {
+        EasyLoading.dismiss();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => DashBoardPage()));
+      });
     }
   }
 }

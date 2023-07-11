@@ -1,238 +1,247 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
+import 'package:smartftraffic/presentation/login/login_page.dart';
 
-// class MyWidget extends StatefulWidget {
-//   const MyWidget({super.key});
+import '../../../utils/app_colors.dart';
 
-//   @override
-//   State<MyWidget> createState() => _MyWidgetState();
-// }
+enum LightState {
+  red,
+  yellow,
+  green,
+}
 
-// class _MyWidgetState extends State<MyWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//    return Scaffold(
-//     appBar: AppBar(
-     
-//       actions: [
+class TrafficLight {
+  String id;
+  LightState state;
+  bool isOn;
 
-//     ]),
+  TrafficLight({required this.id, required this.state, required this.isOn});
+}
 
-//     body: Column(
-//                 children: [
-//                             Container(
-//                     width: 430,
-//                     height: 134,
-//                     decoration:     BoxDecoration(
-//                 color: Color(0xff05559e))
-//                     ),
-//         Row(
-//                         children: [
-//                                     Text(
-//                             "Dashboard",
-//                             style: TextStyle(
-//                                 fontSize: 20,
-//                                 fontWeight: FontWeight.w700,
-//                             )
-//                         )
-//                         ],
-//                     ),
-//         Column(
-//                         children: [
-//                                     Container(
-//                         width: 18,
-//                         height: 18,
-//                         )
-//                         ],
-//                     ),
-//         Column(
-//                         children: [
-//                                     Container(
-//                         width: 16,
-//                         height: 16,
-//                         )
-//                         ],
-//                     ),
-//         Column(
-//                         children: [
-//                                     Container(
-//                         width: 18,
-//                         height: 12,
-//                         )
-//                         ],
-//                     ),
-//         Row(
-//                         children: [
-//                                     Text(
-//                             "Lane : 1",
-//                             style: TextStyle(
-//                                 fontSize: 20,
-//                                 fontWeight: FontWeight.w700,
-//                             )
-//                         )
-//                         ],
-//                     ),
-//         Column(
-//                         children: [
-//                                     Container(
-//                             width: 388,
-//                             height: 60,
-//                             decoration:     BoxDecoration(
-//                         color: Color(0xfff7f7f7))
-//                             ),
-//                 Container(
-//                             width: 388,
-//                             height: 60,
-//                             decoration:     BoxDecoration(
-//                         color: Color(0xfff7f7f7))
-//                             ),
-//                 Container(
-//                             width: 388,
-//                             height: 60,
-//                             decoration:     BoxDecoration(
-//                         color: Color(0xfff7f7f7))
-//                             ),
-//                 Image.asset(
-//                             "assets/Ellipse 1.png",
-//                             width: 42,
-//                             height: 42,
-//                             ),
-//                 Image.asset(
-//                             "assets/Ellipse 4.png",
-//                             width: 10,
-//                             height: 10,
-//                             ),
-//                 Image.asset(
-//                             "assets/Ellipse 2.png",
-//                             width: 42,
-//                             height: 42,
-//                             ),
-//                 Image.asset(
-//                             "assets/Ellipse 3.png",
-//                             width: 42,
-//                             height: 42,
-//                             ),
-//                 Image.asset(
-//                             "assets/Ellipse 5.png",
-//                             width: 10,
-//                             height: 10,
-//                             ),
-//                 Image.asset(
-//                             "assets/Ellipse 6.png",
-//                             width: 10,
-//                             height: 10,
-//                             ),
-//                 Row(
-//                                 children: [
-//                                             Text(
-//                                     "Light 1",
-//                                     style: TextStyle(
-//                                         fontSize: 20,
-//                                         fontWeight: FontWeight.w600,
-//                                     )
-//                                 )
-//                                 ],
-//                             ),
-//                 Row(
-//                                 children: [
-//                                             Text(
-//                                     "Light 2",
-//                                     style: TextStyle(
-//                                         fontSize: 20,
-//                                         fontWeight: FontWeight.w600,
-//                                     )
-//                                 )
-//                                 ],
-//                             ),
-//                 Row(
-//                                 children: [
-//                                             Text(
-//                                     "Light 3",
-//                                     style: TextStyle(
-//                                         fontSize: 20,
-//                                         fontWeight: FontWeight.w600,
-//                                     )
-//                                 )
-//                                 ],
-//                             ),
-//                 Stack(children: [    Column(
-//                                         children: [
-//                                                     Column(
-//                                                 children: [
-//                                                             Container(
-//                                                     width: 42.22222137451172,
-//                                                     height: 19,
-//                                                     decoration:     BoxDecoration(
-//                                                 borderRadius: BorderRadius.circular(50), 
-//                                                 color: Color(0xff76ee58))
-//                                                     )
-//                                                 ],
-//                                             )
-//                                         ],
-//                                     ),
-//                         Column(
-//                                         children: [
-//                                                     Image.asset(
-//                                             "assets/Ellipse 1.png",
-//                                             width: 14.777778625488281,
-//                                             height: 14.777778625488281,
-//                                             )
-//                                         ],
-//                                     )],),
-//                 Stack(children: [    Column(
-//                                         children: [
-//                                                     Column(
-//                                                 children: [
-//                                                             Container(
-//                                                     width: 40,
-//                                                     height: 18,
-//                                                     decoration:     BoxDecoration(
-//                                                 borderRadius: BorderRadius.circular(50), 
-//                                                 color: Color(0xffeeeeee))
-//                                                     )
-//                                                 ],
-//                                             )
-//                                         ],
-//                                     ),
-//                         Column(
-//                                         children: [
-//                                                     Image.asset(
-//                                             "assets/Ellipse 1.png",
-//                                             width: 14,
-//                                             height: 14,
-//                                             )
-//                                         ],
-//                                     )],),
-//                 Stack(children: [    Column(
-//                                         children: [
-//                                                     Column(
-//                                                 children: [
-//                                                             Container(
-//                                                     width: 40,
-//                                                     height: 18,
-//                                                     decoration:     BoxDecoration(
-//                                                 borderRadius: BorderRadius.circular(50), 
-//                                                 color: Color(0xffeeeeee))
-//                                                     )
-//                                                 ],
-//                                             )
-//                                         ],
-//                                     ),
-//                         Column(
-//                                         children: [
-//                                                     Image.asset(
-//                                             "assets/Ellipse 1.png",
-//                                             width: 14,
-//                                             height: 14,
-//                                             )
-//                                         ],
-//                                     )],)
-//                         ],
-//                     )
-//                 ],
-//             ),
+class DashBoardPage extends StatefulWidget {
+  @override
+  _DashBoardPageState createState() => _DashBoardPageState();
+}
 
-//    );
-//   }
-// }
+class _DashBoardPageState extends State<DashBoardPage> {
+  List<TrafficLight> trafficLights = [
+    TrafficLight(id: '1', state: LightState.red, isOn: true),
+    TrafficLight(id: '2', state: LightState.green, isOn: false),
+    TrafficLight(id: '3', state: LightState.yellow, isOn: false),
+  ];
+
+  //Toggle light
+  void toggleLight(String id) {
+    setState(() {
+      trafficLights.forEach((light) {
+        if (light.id == id) {
+          light.isOn = !light.isOn;
+        } else {
+          light.isOn = false;
+        }
+      });
+    });
+  }
+
+//Get next light state
+  LightState getNextLightState(LightState currentState) {
+    switch (currentState) {
+      case LightState.red:
+        return LightState.green;
+      case LightState.yellow:
+        return LightState.red;
+      case LightState.green:
+        return LightState.yellow;
+    }
+  }
+
+  //Change light state
+
+  void changeLightState(String id) {
+    setState(() {
+      trafficLights.forEach((light) {
+        if (light.id == id) {
+          light.state = getNextLightState(light.state);
+        }
+      });
+    });
+  }
+
+  //Get light icon
+
+  IconData getLightIcon(LightState state) {
+    switch (state) {
+      case LightState.red:
+        return Icons.trip_origin;
+      case LightState.yellow:
+        return Icons.trip_origin;
+      case LightState.green:
+        return Icons.trip_origin;
+    }
+  }
+
+  //Get light color
+  Color getLightColor(LightState state) {
+    switch (state) {
+      case LightState.red:
+        return Colors.red;
+      case LightState.yellow:
+        return Colors.yellow;
+      case LightState.green:
+        return Colors.green;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
+    List<TrafficLight> filteredTrafficLights =
+        List<TrafficLight>.from(trafficLights);
+
+    void filterTrafficLights(String query) {
+      setState(() {
+        filteredTrafficLights = trafficLights.where((light) {
+          final idLower = light.id.toLowerCase();
+          final queryLower = query.toLowerCase();
+          return idLower.contains(queryLower);
+        }).toList();
+      });
+    }
+
+    void sortTrafficLights(String? sortBy) {
+      setState(() {
+        if (sortBy != null) {
+          switch (sortBy) {
+            case 'ID':
+              filteredTrafficLights.sort((a, b) => a.id.compareTo(b.id));
+              break;
+            case 'State':
+              filteredTrafficLights
+                  .sort((a, b) => a.state.index.compareTo(b.state.index));
+              break;
+            case 'Alphabetical':
+              filteredTrafficLights.sort((a, b) => a.id.compareTo(b.id));
+              break;
+          }
+        }
+      });
+    }
+
+    Future<void> refreshTrafficLights() async {
+      await Future.delayed(Duration(seconds: 1));
+      setState(() {
+        trafficLights = [
+          TrafficLight(id: '1', state: LightState.red, isOn: true),
+          TrafficLight(id: '2', state: LightState.green, isOn: false),
+          TrafficLight(id: '3', state: LightState.yellow, isOn: false),
+        ];
+        filteredTrafficLights = List<TrafficLight>.from(trafficLights);
+      });
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        elevation: 0.0,
+        title: Text('Dashboard'),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {},
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: refreshTrafficLights,
+          ),
+          IconButton(
+            icon: Icon(Icons.logout_rounded),
+            onPressed: () {
+              _logout();
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              onChanged: filterTrafficLights,
+              decoration: InputDecoration(
+                labelText: 'Search',
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+          DropdownButton<String>(
+            value: 'ID',
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                sortTrafficLights(newValue);
+              }
+            },
+            icon: Icon(Icons.arrow_drop_down), // Add an arrow icon
+            iconSize: 24, // Set the size of the arrow icon
+            elevation: 16,
+            style: TextStyle(color: Colors.black),
+            underline: Container(
+              height: 2,
+              color: Colors.grey,
+            ),
+            items: [
+              DropdownMenuItem<String>(
+                value: 'ID',
+                child: Text('Sort by ID'),
+              ),
+              DropdownMenuItem<String>(
+                value: 'State',
+                child: Text('Sort by State'),
+              ),
+              DropdownMenuItem<String>(
+                value: 'Alphabetical',
+                child: Text('Sort Alphabetically'),
+              ),
+            ],
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: refreshTrafficLights,
+              child: ListView.builder(
+                itemCount: filteredTrafficLights.length,
+                itemBuilder: (context, index) {
+                  final light = filteredTrafficLights[index];
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: getLightColor(light.state),
+                      radius: 20,
+                      child: Icon(
+                        getLightIcon(light.state),
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text('Light ${light.id}'),
+                    subtitle: Text('${light.state.toString().split('.').last}'),
+                    trailing: Switch(
+                      value: light.isOn,
+                      onChanged: (value) => toggleLight(light.id),
+                    ),
+                    onTap: () => changeLightState(light.id),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _logout() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
+  }
+}
