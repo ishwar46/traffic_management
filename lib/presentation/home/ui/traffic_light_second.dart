@@ -17,16 +17,16 @@ class TrafficLight {
   TrafficLight({required this.id, required this.state, required this.isOn});
 }
 
-class TrafficLight_One extends StatefulWidget {
+class TrafficLight_Two extends StatefulWidget {
   @override
-  _TrafficLight_OneState createState() =>
-      _TrafficLight_OneState();
+  _TrafficLight_TwoState createState() =>
+      _TrafficLight_TwoState();
 }
 
-class _TrafficLight_OneState
-    extends State<TrafficLight_One> {
+class _TrafficLight_TwoState
+    extends State<TrafficLight_Two> {
   List<TrafficLight> trafficLights = [
-    TrafficLight(id: '1', state: LightState.red, isOn: true),
+    TrafficLight(id: '1', state: LightState.red, isOn: false),
     TrafficLight(id: '2', state: LightState.green, isOn: false),
     TrafficLight(id: '3', state: LightState.yellow, isOn: false),
   ];
@@ -154,7 +154,7 @@ class _TrafficLight_OneState
               ),
             ),
           ),
-           Text('Traffic Light 1'),
+          Text('Traffic Light 2'),
           Expanded(
             child: RefreshIndicator(
               onRefresh: refreshTrafficLights,

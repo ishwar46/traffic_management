@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light.dart';
+import 'package:smartftraffic/presentation/home/ui/traffic_light_first.dart';
+import 'package:smartftraffic/presentation/home/ui/traffic_light_four.dart';
+import 'package:smartftraffic/presentation/home/ui/traffic_light_second.dart';
+import 'package:smartftraffic/presentation/home/ui/traffic_light_third.dart';
 import 'package:smartftraffic/presentation/login/login_page.dart';
 
 import '../../../utils/app_colors.dart';
@@ -182,26 +185,23 @@ class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4, // Set the number of tabs
+      length: 4,
       child: Scaffold(
         body: TabBarView(
           children: [
-            // Content of Tab 1
             Center(
               child: TrafficLight_One(),
-              //child: LoginPage(),
             ),
-            // Content of Tab 2
             Center(
-              child: Text('Page 2'),
+              child: TrafficLight_Two(),
             ),
-            // Content of Tab 3
+            
             Center(
-              child: Text('Page 3'),
+              child: TrafficLight_Three(),
             ),
             // Content of Tab 4
             Center(
-              child: Text('Page 4'),
+              child: TrafficLight_Four(),
             ),
           ],
         ),
