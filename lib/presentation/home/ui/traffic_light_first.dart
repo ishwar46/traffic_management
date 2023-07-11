@@ -69,7 +69,6 @@ class _TrafficLight_OneState
   }
 
   //Get light icon
-
   IconData getLightIcon(LightState state) {
     switch (state) {
       case LightState.red:
@@ -95,9 +94,64 @@ class _TrafficLight_OneState
 
   @override
   Widget build(BuildContext context) {
+    bool isCodeEntered = false; 
     TextEditingController searchController = TextEditingController();
     List<TrafficLight> filteredTrafficLights =
         List<TrafficLight>.from(trafficLights);
+
+        void handleCodeEntry(String code) {
+  if (code == "123") {
+    setState(() {
+      isCodeEntered = true;
+
+      trafficLights[2].isOn = true;
+      trafficLights[0].isOn = false;
+      trafficLights[1].isOn = false;
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Code Entered"),
+          content: Text("Emergency code accepted. Green light turned on."),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primaryColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  } else {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Invalid Code"),
+          content: Text("Please enter a valid emergency code."),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primaryColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 
     void filterTrafficLights(String query) {
       setState(() {
@@ -106,25 +160,6 @@ class _TrafficLight_OneState
           final queryLower = query.toLowerCase();
           return idLower.contains(queryLower);
         }).toList();
-      });
-    }
-
-    void sortTrafficLights(String? sortBy) {
-      setState(() {
-        if (sortBy != null) {
-          switch (sortBy) {
-            case 'ID':
-              filteredTrafficLights.sort((a, b) => a.id.compareTo(b.id));
-              break;
-            case 'State':
-              filteredTrafficLights
-                  .sort((a, b) => a.state.index.compareTo(b.state.index));
-              break;
-            case 'Alphabetical':
-              filteredTrafficLights.sort((a, b) => a.id.compareTo(b.id));
-              break;
-          }
-        }
       });
     }
 
@@ -139,55 +174,104 @@ class _TrafficLight_OneState
         filteredTrafficLights = List<TrafficLight>.from(trafficLights);
       });
     }
-
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              onChanged: filterTrafficLights,
-              decoration: InputDecoration(
-                labelText: 'Search',
-                prefixIcon: Icon(Icons.search),
+  return Scaffold(
+  body: Column(
+    children: [
+      Expanded(
+        flex: 1,
+        child: ListView.builder(
+          itemCount: filteredTrafficLights.length,
+          itemBuilder: (context, index) {
+            final light = filteredTrafficLights[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundColor: getLightColor(light.state),
+                radius: 20,
+                child: Icon(
+                  getLightIcon(light.state),
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ),
-           Text('Traffic Light 1'),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: refreshTrafficLights,
-              child: ListView.builder(
-                itemCount: filteredTrafficLights.length,
-                itemBuilder: (context, index) {
-                  final light = filteredTrafficLights[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: getLightColor(light.state),
-                      radius: 20,
-                      child: Icon(
-                        getLightIcon(light.state),
-                        color: Colors.white,
-                      ),
-                    ),
-                    title: Text('Light ${light.id}'),
-                    subtitle: Text('${light.state.toString().split('.').last}'),
-                    trailing: Switch(
-                      value: light.isOn,
-                      onChanged: (value) => toggleLight(light.id),
-                    ),
-                    onTap: () => changeLightState(light.id),
-                  );
-                },
+              title: Text('Light ${light.id}'),
+              subtitle: Text('${light.state.toString().split('.').last}'),
+              trailing: Switch(
+                value: light.isOn,
+                onChanged: (value) => toggleLight(light.id),
               ),
-            ),
-          ),
-        ],
+              onTap: () => changeLightState(light.id),
+            );
+          },
+        ),
       ),
-    );
-  }
 
+      Expanded(
+        flex: 2,
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              CustomCard(title: 'Card 1', icon: Icons.card_giftcard),
+              CustomCard(title: 'Card 2', icon: Icons.star),
+              CustomCard(title: 'Card 3', icon: Icons.favorite),
+            ],
+          ),
+        ),
+      ),
+    ],
+  ),
+  floatingActionButton: FloatingActionButton(
+  onPressed: () {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String enteredCode = "";
+        return AlertDialog(
+          title: Text("Enter Code"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+              keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  enteredCode = value;
+                },
+                decoration: InputDecoration(
+                  hintText: "Enter code",
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              onPressed: () {
+                handleCodeEntry(enteredCode);
+              },
+              child: Text("Enter"),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+          ],
+        );
+      },
+    );
+  },
+  child: Icon(Icons.add),
+  backgroundColor: AppColors.primaryColor,
+),
+);
+
+  }
   void _logout() {
     Navigator.pushReplacement(
       context,
@@ -197,3 +281,21 @@ class _TrafficLight_OneState
     );
   }
 }
+
+class CustomCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const CustomCard({required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
+      ),
+    );
+  }
+}
+
