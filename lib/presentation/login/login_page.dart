@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light.dart';
+import 'package:smartftraffic/presentation/home/ui/home_page.dart';
 import 'package:smartftraffic/presentation/register/register_page.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/widgets/input_textfield.dart';
