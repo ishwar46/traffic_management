@@ -1,7 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:smartftraffic/presentation/login/login_page.dart';
+import 'package:geolocator/geolocator.dart';
+
 
 import '../../../utils/app_colors.dart';
+Future<Position> _getCurrentLocation() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.deniedForever) {
+    // Location permissions are permanently denied
+    return Future.error('Location permissions are permanently denied.');
+  }
+
+  if (permission == LocationPermission.denied) {
+    // Location permissions are denied, ask for permission
+    permission = await Geolocator.requestPermission();
+    if (permission != LocationPermission.whileInUse &&
+        permission != LocationPermission.always) {
+      // Location permissions are denied
+      return Future.error('Location permissions are denied.');
+    }
+  }
+
+  return await Geolocator.getCurrentPosition();
+}
+
 
 enum LightState {
   red,
@@ -175,101 +206,146 @@ class _TrafficLight_OneState
       });
     }
   return Scaffold(
-  body: Column(
-    children: [
-      Expanded(
-        flex: 1,
-        child: ListView.builder(
-          itemCount: filteredTrafficLights.length,
-          itemBuilder: (context, index) {
-            final light = filteredTrafficLights[index];
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundColor: getLightColor(light.state),
-                radius: 20,
-                child: Icon(
-                  getLightIcon(light.state),
-                  color: Colors.white,
+  body: RefreshIndicator(
+    onRefresh: refreshTrafficLights,
+    child: Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: ListView.builder(
+            itemCount: filteredTrafficLights.length,
+            itemBuilder: (context, index) {
+              final light = filteredTrafficLights[index];
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: getLightColor(light.state),
+                  radius: 20,
+                  child: Icon(
+                    getLightIcon(light.state),
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              title: Text('Light ${light.id}'),
-              subtitle: Text('${light.state.toString().split('.').last}'),
-              trailing: Switch(
-                value: light.isOn,
-                onChanged: (value) => toggleLight(light.id),
-              ),
-              onTap: () => changeLightState(light.id),
-            );
-          },
-        ),
-      ),
-
-      Expanded(
-        flex: 2,
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CustomCard(title: 'Card 1', icon: Icons.card_giftcard),
-              CustomCard(title: 'Card 2', icon: Icons.star),
-              CustomCard(title: 'Card 3', icon: Icons.favorite),
-            ],
+                title: Text('Light ${light.id}'),
+                subtitle: Text('${light.state.toString().split('.').last}'),
+                trailing: Switch(
+                  value: light.isOn,
+                  onChanged: (value) => toggleLight(light.id),
+                ),
+                onTap: () => changeLightState(light.id),
+              );
+            },
           ),
         ),
-      ),
-    ],
+        Expanded(
+          flex: 2,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      Position position = await _getCurrentLocation();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Location Info"),
+                            content: Text(
+                              "Latitude: ${position.latitude}\nLongitude: ${position.longitude}",
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Location Error"),
+                            content: Text("Failed to retrieve location. Please try again."),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: Text("Get Current Location"),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
   ),
   floatingActionButton: FloatingActionButton(
-  onPressed: () {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String enteredCode = "";
-        return AlertDialog(
-          title: Text("Enter Code"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-              keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  enteredCode = value;
-                },
-                decoration: InputDecoration(
-                  hintText: "Enter code",
+    onPressed: () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          String enteredCode = "";
+          return AlertDialog(
+            title: Text("Enter Code"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    enteredCode = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter code",
+                  ),
                 ),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                ),
+                onPressed: () {
+                  handleCodeEntry(enteredCode);
+                },
+                child: Text("Enter"),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Cancel"),
               ),
             ],
-          ),
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.green,
-              ),
-              onPressed: () {
-                handleCodeEntry(enteredCode);
-              },
-              child: Text("Enter"),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Cancel"),
-            ),
-          ],
-        );
-      },
-    );
-  },
-  child: Icon(Icons.add),
-  backgroundColor: AppColors.primaryColor,
-),
+          );
+        },
+      );
+    },
+    child: Icon(Icons.add),
+    backgroundColor: AppColors.primaryColor,
+  ),
 );
+
 
   }
   void _logout() {
