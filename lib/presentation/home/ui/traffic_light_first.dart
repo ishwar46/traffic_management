@@ -154,6 +154,7 @@ class _TrafficLight_OneState
               ),
             ),
           ),
+           Text('Traffic Light 1'),
           Expanded(
             child: RefreshIndicator(
               onRefresh: refreshTrafficLights,

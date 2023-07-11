@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light_first.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light_second.dart';
 import 'package:smartftraffic/presentation/login/login_page.dart';
 
 import '../../../utils/app_colors.dart';
@@ -19,16 +17,16 @@ class TrafficLight {
   TrafficLight({required this.id, required this.state, required this.isOn});
 }
 
-class Dashboard extends StatefulWidget {
+class TrafficLight_Two extends StatefulWidget {
   @override
-  _DashboardState createState() =>
-      _DashboardState();
+  _TrafficLight_TwoState createState() =>
+      _TrafficLight_TwoState();
 }
 
-class _DashboardState
-    extends State<Dashboard> {
+class _TrafficLight_TwoState
+    extends State<TrafficLight_Two> {
   List<TrafficLight> trafficLights = [
-    TrafficLight(id: '1', state: LightState.red, isOn: true),
+    TrafficLight(id: '1', state: LightState.red, isOn: false),
     TrafficLight(id: '2', state: LightState.green, isOn: false),
     TrafficLight(id: '3', state: LightState.yellow, isOn: false),
   ];
@@ -143,30 +141,50 @@ class _DashboardState
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        elevation: 0.0,
-        title: Text('Dashboard'),
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: refreshTrafficLights,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              onChanged: filterTrafficLights,
+              decoration: InputDecoration(
+                labelText: 'Search',
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
           ),
-          IconButton(
-            icon: Icon(Icons.logout_rounded),
-            onPressed: (
-
-            ) {
-              _logout();
-            },
+          Text('Traffic Light 2'),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: refreshTrafficLights,
+              child: ListView.builder(
+                itemCount: filteredTrafficLights.length,
+                itemBuilder: (context, index) {
+                  final light = filteredTrafficLights[index];
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: getLightColor(light.state),
+                      radius: 20,
+                      child: Icon(
+                        getLightIcon(light.state),
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text('Light ${light.id}'),
+                    subtitle: Text('${light.state.toString().split('.').last}'),
+                    trailing: Switch(
+                      value: light.isOn,
+                      onChanged: (value) => toggleLight(light.id),
+                    ),
+                    onTap: () => changeLightState(light.id),
+                  );
+                },
+              ),
+            ),
           ),
         ],
       ),
-      body: MyTabbedPage(),
     );
   }
 
@@ -175,34 +193,6 @@ class _DashboardState
       context,
       MaterialPageRoute(
         builder: (context) => LoginPage(),
-      ),
-    );
-  }
-}
-class MyTabbedPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        body: TabBarView(
-          children: [
-            Center(
-              child: TrafficLight_One(),
-            ),
-            Center(
-              child: TrafficLight_Two(),
-            ),
-            // Content of Tab 3
-            Center(
-              child: Text('Page 3'),
-            ),
-            // Content of Tab 4
-            Center(
-              child: Text('Page 4'),
-            ),
-          ],
-        ),
       ),
     );
   }
