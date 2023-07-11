@@ -29,14 +29,8 @@ class _DashboardState
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {},
-          ),
-          IconButton(
             icon: Icon(Icons.logout_rounded),
-            onPressed: (
-
-            ) {
+            onPressed: () {
               _logout();
             },
           ),
@@ -61,20 +55,53 @@ class MyTabbedPage extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        body: TabBarView(
+        backgroundColor: AppColors.primaryColor,
+        body: Column(
           children: [
-            Center(
-              child: TrafficLight_One(),
+            Container(
+              color: Colors.white,
+              child: TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Light 1',
+                  ),
+                  Tab(
+                    text: 'Light 2',
+                  ),
+                  Tab(
+                    text: 'Light 3',
+                  ),
+                  Tab(
+                    text: 'Light 4',
+                  ),
+                ],
+                labelColor: AppColors.primaryColor,
+                unselectedLabelColor: Colors.black,
+                indicatorColor: AppColors.primaryColor,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorWeight: 2.0,
+              ),
             ),
-            Center(
-              child: TrafficLight_Two(),
-            ),
-            
-            Center(
-              child: TrafficLight_Three(),
-            ),
-            Center(
-              child: TrafficLight_Four(),
+            Expanded(
+              child: Container(
+                color: Colors.white,
+                child: TabBarView(
+                  children: [
+                    Center(
+                      child: TrafficLight_One(),
+                    ),
+                    Center(
+                      child: TrafficLight_Two(),
+                    ),
+                    Center(
+                      child: TrafficLight_Three(),
+                    ),
+                    Center(
+                      child: TrafficLight_Four(),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
