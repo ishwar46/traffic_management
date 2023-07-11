@@ -41,6 +41,10 @@ class _CustomInputFieldState extends State<CustomInputField> {
           TextFormField(
             obscureText: (widget.obscureText && _obscureText),
             decoration: InputDecoration(
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                
+              ),
               isDense: (widget.isDense != null) ? widget.isDense : false,
               hintText: widget.hintText,
               suffixIcon: widget.suffixIcon ? IconButton(

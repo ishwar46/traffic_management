@@ -63,39 +63,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     children: [
                       const PageHeading(title: 'Sign-up',),
-                      SizedBox(
-                        width: 130,
-                        height: 130,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey.shade200,
-                          backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                bottom: 5,
-                                right: 5,
-                                child: GestureDetector(
-                                  onTap: _pickProfileImage,
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue.shade400,
-                                      border: Border.all(color: Colors.white, width: 3),
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    child: const Icon(
-                                      Icons.camera_alt_sharp,
-                                      color: Colors.white,
-                                      size: 25,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 16,),
                       CustomInputField(
                           labelText: 'Name',

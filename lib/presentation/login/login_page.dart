@@ -173,3 +173,53 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 }
+
+class MyTabbedPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4, // Set the number of tabs
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Tabbed Page'),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: 'Tab 1',
+              ),
+              Tab(
+                text: 'Tab 2',
+              ),
+              Tab(
+                text: 'Tab 3',
+              ),
+              Tab(
+                text: 'Tab 4',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // Content of Tab 1
+            Center(
+              child: Text('Tab 1 Content'),
+            ),
+            // Content of Tab 2
+            Center(
+              child: Text('Tab 2 Content'),
+            ),
+            // Content of Tab 3
+            Center(
+              child: Text('Tab 3 Content'),
+            ),
+            // Content of Tab 4
+            Center(
+              child: Text('Tab 4 Content'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

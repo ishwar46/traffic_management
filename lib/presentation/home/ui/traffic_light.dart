@@ -164,79 +164,80 @@ class _TrafficLightManagementSystemState
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              onChanged: filterTrafficLights,
-              decoration: InputDecoration(
-                labelText: 'Search',
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
-          ),
-          DropdownButton<String>(
-            value: 'ID',
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                sortTrafficLights(newValue);
-              }
-            },
-            icon: Icon(Icons.arrow_drop_down), // Add an arrow icon
-            iconSize: 24, // Set the size of the arrow icon
-            elevation: 16,
-            style: TextStyle(color: Colors.black),
-            underline: Container(
-              height: 2,
-              color: Colors.grey,
-            ),
-            items: [
-              DropdownMenuItem<String>(
-                value: 'ID',
-                child: Text('Sort by ID'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'State',
-                child: Text('Sort by State'),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Alphabetical',
-                child: Text('Sort Alphabetically'),
-              ),
-            ],
-          ),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: refreshTrafficLights,
-              child: ListView.builder(
-                itemCount: filteredTrafficLights.length,
-                itemBuilder: (context, index) {
-                  final light = filteredTrafficLights[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: getLightColor(light.state),
-                      radius: 20,
-                      child: Icon(
-                        getLightIcon(light.state),
-                        color: Colors.white,
-                      ),
-                    ),
-                    title: Text('Light ${light.id}'),
-                    subtitle: Text('${light.state.toString().split('.').last}'),
-                    trailing: Switch(
-                      value: light.isOn,
-                      onChanged: (value) => toggleLight(light.id),
-                    ),
-                    onTap: () => changeLightState(light.id),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
+      body: MyTabbedPage(),
+      // body: Column(
+      //   children: [
+      //     Padding(
+      //       padding: const EdgeInsets.all(8.0),
+      //       child: TextField(
+      //         controller: searchController,
+      //         onChanged: filterTrafficLights,
+      //         decoration: InputDecoration(
+      //           labelText: 'Search',
+      //           prefixIcon: Icon(Icons.search),
+      //         ),
+      //       ),
+      //     ),
+      //     DropdownButton<String>(
+      //       value: 'ID',
+      //       onChanged: (String? newValue) {
+      //         if (newValue != null) {
+      //           sortTrafficLights(newValue);
+      //         }
+      //       },
+      //       icon: Icon(Icons.arrow_drop_down), // Add an arrow icon
+      //       iconSize: 24, // Set the size of the arrow icon
+      //       elevation: 16,
+      //       style: TextStyle(color: Colors.black),
+      //       underline: Container(
+      //         height: 2,
+      //         color: Colors.grey,
+      //       ),
+      //       items: [
+      //         DropdownMenuItem<String>(
+      //           value: 'ID',
+      //           child: Text('Sort by ID'),
+      //         ),
+      //         DropdownMenuItem<String>(
+      //           value: 'State',
+      //           child: Text('Sort by State'),
+      //         ),
+      //         DropdownMenuItem<String>(
+      //           value: 'Alphabetical',
+      //           child: Text('Sort Alphabetically'),
+      //         ),
+      //       ],
+      //     ),
+      //     Expanded(
+      //       child: RefreshIndicator(
+      //         onRefresh: refreshTrafficLights,
+      //         child: ListView.builder(
+      //           itemCount: filteredTrafficLights.length,
+      //           itemBuilder: (context, index) {
+      //             final light = filteredTrafficLights[index];
+      //             return ListTile(
+      //               leading: CircleAvatar(
+      //                 backgroundColor: getLightColor(light.state),
+      //                 radius: 20,
+      //                 child: Icon(
+      //                   getLightIcon(light.state),
+      //                   color: Colors.white,
+      //                 ),
+      //               ),
+      //               title: Text('Light ${light.id}'),
+      //               subtitle: Text('${light.state.toString().split('.').last}'),
+      //               trailing: Switch(
+      //                 value: light.isOn,
+      //                 onChanged: (value) => toggleLight(light.id),
+      //               ),
+      //               onTap: () => changeLightState(light.id),
+      //             );
+      //           },
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 
@@ -245,6 +246,37 @@ class _TrafficLightManagementSystemState
       context,
       MaterialPageRoute(
         builder: (context) => LoginPage(),
+      ),
+    );
+  }
+}
+class MyTabbedPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4, // Set the number of tabs
+      child: Scaffold(
+        body: TabBarView(
+          children: [
+            // Content of Tab 1
+            Center(
+              child: Text('Page 1'),
+              //child: LoginPage(),
+            ),
+            // Content of Tab 2
+            Center(
+              child: Text('Page 2'),
+            ),
+            // Content of Tab 3
+            Center(
+              child: Text('Page 3'),
+            ),
+            // Content of Tab 4
+            Center(
+              child: Text('Page 4'),
+            ),
+          ],
+        ),
       ),
     );
   }
