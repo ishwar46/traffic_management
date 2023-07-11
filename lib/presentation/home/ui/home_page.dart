@@ -199,7 +199,6 @@ class MyTabbedPage extends StatelessWidget {
             Center(
               child: TrafficLight_Three(),
             ),
-            // Content of Tab 4
             Center(
               child: TrafficLight_Four(),
             ),
