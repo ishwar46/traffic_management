@@ -182,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
       Future.delayed(const Duration(seconds: 2), () {
         EasyLoading.dismiss();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => TrafficLightManagementSystem()));
+            context, MaterialPageRoute(builder: (context) =>  new Dashboard()));
       });
     }
   }
