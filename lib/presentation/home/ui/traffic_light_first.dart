@@ -1,66 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:smartftraffic/presentation/login/login_page.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter/widgets.dart';
+
+import '../../../data/traffic_light_data.dart';
+
 
 
 import '../../../utils/app_colors.dart';
-Future<Position> _getCurrentLocation() async {
-  bool serviceEnabled;
-  LocationPermission permission;
-
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    // Location services are not enabled
-    return Future.error('Location services are disabled.');
-  }
-
-  permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.deniedForever) {
-    // Location permissions are permanently denied
-    return Future.error('Location permissions are permanently denied.');
-  }
-
-  if (permission == LocationPermission.denied) {
-    // Location permissions are denied, ask for permission
-    permission = await Geolocator.requestPermission();
-    if (permission != LocationPermission.whileInUse &&
-        permission != LocationPermission.always) {
-      // Location permissions are denied
-      return Future.error('Location permissions are denied.');
-    }
-  }
-
-  return await Geolocator.getCurrentPosition();
-}
-
-
-enum LightState {
-  red,
-  yellow,
-  green,
-}
-
-class TrafficLight {
-  String id;
-  LightState state;
-  bool isOn;
-
-  TrafficLight({required this.id, required this.state, required this.isOn});
-}
-
 class TrafficLight_One extends StatefulWidget {
   @override
   _TrafficLight_OneState createState() =>
       _TrafficLight_OneState();
 }
 
-class _TrafficLight_OneState
-    extends State<TrafficLight_One> {
-  List<TrafficLight> trafficLights = [
-    TrafficLight(id: '1', state: LightState.red, isOn: true),
-    TrafficLight(id: '2', state: LightState.green, isOn: false),
-    TrafficLight(id: '3', state: LightState.yellow, isOn: false),
-  ];
+class _TrafficLight_OneState extends State<TrafficLight_One> with AutomaticKeepAliveClientMixin<TrafficLight_One>{
+  List<TrafficLight> trafficLights = [];
+
+ bool get wantKeepAlive => true;
 
   //Toggle light
   void toggleLight(String id) {
@@ -75,7 +31,7 @@ class _TrafficLight_OneState
     });
   }
 
-//Get next light state
+//next light state
   LightState getNextLightState(LightState currentState) {
     switch (currentState) {
       case LightState.red:
@@ -86,20 +42,7 @@ class _TrafficLight_OneState
         return LightState.yellow;
     }
   }
-
-  //Change light state
-
-  void changeLightState(String id) {
-    setState(() {
-      trafficLights.forEach((light) {
-        if (light.id == id) {
-          light.state = getNextLightState(light.state);
-        }
-      });
-    });
-  }
-
-  //Get light icon
+  //light icon
   IconData getLightIcon(LightState state) {
     switch (state) {
       case LightState.red:
@@ -111,7 +54,7 @@ class _TrafficLight_OneState
     }
   }
 
-  //Get light color
+  //light color
   Color getLightColor(LightState state) {
     switch (state) {
       case LightState.red:
@@ -134,7 +77,6 @@ class _TrafficLight_OneState
   if (code == "123") {
     setState(() {
       isCodeEntered = true;
-
       trafficLights[2].isOn = true;
       trafficLights[0].isOn = false;
       trafficLights[1].isOn = false;
@@ -199,8 +141,8 @@ class _TrafficLight_OneState
       setState(() {
         trafficLights = [
           TrafficLight(id: '1', state: LightState.red, isOn: true),
-          TrafficLight(id: '2', state: LightState.green, isOn: false),
-          TrafficLight(id: '3', state: LightState.yellow, isOn: false),
+          TrafficLight(id: '2', state: LightState.yellow, isOn: false),
+          TrafficLight(id: '3', state: LightState.green, isOn: false),
         ];
         filteredTrafficLights = List<TrafficLight>.from(trafficLights);
       });
@@ -231,65 +173,9 @@ class _TrafficLight_OneState
                   value: light.isOn,
                   onChanged: (value) => toggleLight(light.id),
                 ),
-                onTap: () => changeLightState(light.id),
+                //onTap: () => changeLightState(light.id),
               );
             },
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      Position position = await _getCurrentLocation();
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Location Info"),
-                            content: Text(
-                              "Latitude: ${position.latitude}\nLongitude: ${position.longitude}",
-                            ),
-                            actions: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } catch (e) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Location Error"),
-                            content: Text("Failed to retrieve location. Please try again."),
-                            actions: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text("Get Current Location"),
-                ),
-              ],
-            ),
           ),
         ),
       ],

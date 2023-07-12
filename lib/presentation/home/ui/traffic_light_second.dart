@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smartftraffic/presentation/login/login_page.dart';
 
+import '../../../data/traffic_light_data.dart';
 import '../../../utils/app_colors.dart';
-
-enum LightState {
-  red,
-  yellow,
-  green,
-}
-
-class TrafficLight {
-  String id;
-  LightState state;
-  bool isOn;
-
-  TrafficLight({required this.id, required this.state, required this.isOn});
-}
 
 class TrafficLight_Two extends StatefulWidget {
   @override
@@ -24,12 +11,10 @@ class TrafficLight_Two extends StatefulWidget {
 }
 
 class _TrafficLight_TwoState
-    extends State<TrafficLight_Two> {
+    extends State<TrafficLight_Two> with AutomaticKeepAliveClientMixin{
   List<TrafficLight> trafficLights = [
-    TrafficLight(id: '1', state: LightState.red, isOn: false),
-    TrafficLight(id: '2', state: LightState.green, isOn: false),
-    TrafficLight(id: '3', state: LightState.yellow, isOn: false),
   ];
+  bool get wantKeepAlive => true;
 
   //Toggle light
   void toggleLight(String id) {
@@ -54,18 +39,6 @@ class _TrafficLight_TwoState
       case LightState.green:
         return LightState.yellow;
     }
-  }
-
-  //Change light state
-
-  void changeLightState(String id) {
-    setState(() {
-      trafficLights.forEach((light) {
-        if (light.id == id) {
-          light.state = getNextLightState(light.state);
-        }
-      });
-    });
   }
 
   //Get light icon
@@ -95,7 +68,7 @@ class _TrafficLight_TwoState
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
+     bool isCodeEntered = false; 
     List<TrafficLight> filteredTrafficLights =
         List<TrafficLight>.from(trafficLights);
 
@@ -108,6 +81,58 @@ class _TrafficLight_TwoState
         }).toList();
       });
     }
+
+    void handleCodeEntry(String code) {
+  if (code == "123") {
+    setState(() {
+      isCodeEntered = true;
+      trafficLights[2].isOn = true;
+      trafficLights[0].isOn = false;
+      trafficLights[1].isOn = false;
+    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Code Entered"),
+          content: Text("Emergency code accepted. Green light turned on."),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primaryColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  } else {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Invalid Code"),
+          content: Text("Please enter a valid emergency code."),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.primaryColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 
     void sortTrafficLights(String? sortBy) {
       setState(() {
@@ -133,59 +158,97 @@ class _TrafficLight_TwoState
       setState(() {
         trafficLights = [
           TrafficLight(id: '1', state: LightState.red, isOn: true),
-          TrafficLight(id: '2', state: LightState.green, isOn: false),
-          TrafficLight(id: '3', state: LightState.yellow, isOn: false),
+          TrafficLight(id: '2', state: LightState.yellow, isOn: false),
+          TrafficLight(id: '3', state: LightState.green, isOn: false),
         ];
         filteredTrafficLights = List<TrafficLight>.from(trafficLights);
       });
     }
 
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              onChanged: filterTrafficLights,
-              decoration: InputDecoration(
-                labelText: 'Search',
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
+  body: RefreshIndicator(
+    onRefresh: refreshTrafficLights,
+    child: Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: ListView.builder(
+            itemCount: filteredTrafficLights.length,
+            itemBuilder: (context, index) {
+              final light = filteredTrafficLights[index];
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: getLightColor(light.state),
+                  radius: 20,
+                  child: Icon(
+                    getLightIcon(light.state),
+                    color: Colors.white,
+                  ),
+                ),
+                title: Text('Light ${light.id}'),
+                subtitle: Text('${light.state.toString().split('.').last}'),
+                trailing: Switch(
+                  value: light.isOn,
+                  onChanged: (value) => toggleLight(light.id),
+                ),
+                //onTap: () => changeLightState(light.id),
+              );
+            },
           ),
-          Text('Traffic Light 2'),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: refreshTrafficLights,
-              child: ListView.builder(
-                itemCount: filteredTrafficLights.length,
-                itemBuilder: (context, index) {
-                  final light = filteredTrafficLights[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: getLightColor(light.state),
-                      radius: 20,
-                      child: Icon(
-                        getLightIcon(light.state),
-                        color: Colors.white,
-                      ),
-                    ),
-                    title: Text('Light ${light.id}'),
-                    subtitle: Text('${light.state.toString().split('.').last}'),
-                    trailing: Switch(
-                      value: light.isOn,
-                      onChanged: (value) => toggleLight(light.id),
-                    ),
-                    onTap: () => changeLightState(light.id),
-                  );
+        ),
+      ],
+    ),
+  ),
+  floatingActionButton: FloatingActionButton(
+    onPressed: () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          String enteredCode = "";
+          return AlertDialog(
+            title: Text("Enter Code"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    enteredCode = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Enter code",
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                ),
+                onPressed: () {
+                  handleCodeEntry(enteredCode);
                 },
+                child: Text("Enter"),
               ),
-            ),
-          ),
-        ],
-      ),
-    );
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("Cancel"),
+              ),
+            ],
+          );
+        },
+      );
+    },
+    child: Icon(Icons.add),
+    backgroundColor: AppColors.primaryColor,
+  ),
+);
   }
 
   void _logout() {
