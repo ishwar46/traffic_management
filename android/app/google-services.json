@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "477414892925",
+    "project_id": "iotproj-55a78",
+    "storage_bucket": "iotproj-55a78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477414892925:android:69b9cdafcc9a5394eed814",
+        "android_client_info": {
+          "package_name": "com.closedai.smarttraffic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477414892925-r7j7kvstvpqff9n6lntvrarj6st28p20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY1Wh35RmLm0_OedEXn7PV0sx4n7kwoJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477414892925-r7j7kvstvpqff9n6lntvrarj6st28p20.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "477414892925-idsad5poi73fedqiph2bs25g7ds33s80.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.closedai.smarttraffic"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
