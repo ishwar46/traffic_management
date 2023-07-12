@@ -1,4 +1,4 @@
-# smart traffic
+# trafficnepal
 
 A new Flutter project.
 

@@ -1,6 +1,6 @@
 {
-    "name": "remittonepal",
-    "short_name": "remittonepal",
+    "name": "trafficnepal",
+    "short_name": "trafficnepal",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

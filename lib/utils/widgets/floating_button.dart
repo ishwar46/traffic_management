@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/utils/app_colors.dart';
+import 'package:trafficnepal/utils/app_colors.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   final VoidCallback onPressed;

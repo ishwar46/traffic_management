@@ -6,23 +6,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:smartftraffic/presentation/OnBoarding/onboarding_screen.dart';
-import 'package:smartftraffic/routes.dart';
-import 'package:smartftraffic/utils/theme.dart';
+import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
+import 'package:trafficnepal/routes.dart';
+import 'package:trafficnepal/utils/theme.dart';
 import 'presentation/login/login_page.dart';
 import 'utils/app_colors.dart';
 
 Future<void> main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setSystemUIOverlayStyle(
+  //     const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
+  // await Firebase.initializeApp();
+  // if (kDebugMode) {
+  //   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  // } else {
+  //   FirebaseCrashlytics.instance.app.setAutomaticDataCollectionEnabled(true);
+  //   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // }
+  // runApp(
+  //   EasyDynamicThemeWidget(child: const MyApp()),
+  // );
+  // configLoading();
+
+  //Run app without Firebase
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
-  await Firebase.initializeApp();
-  if (kDebugMode) {
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-  } else {
-    FirebaseCrashlytics.instance.app.setAutomaticDataCollectionEnabled(true);
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  }
   runApp(
     EasyDynamicThemeWidget(child: const MyApp()),
   );
@@ -59,11 +68,9 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       initialRoute: MyRoutes.onboardingRoute,
       routes: {
-        "/": (context) =>  LoginPage(),
-       MyRoutes.changepassRoute: (context) =>  LoginPage(),
-       MyRoutes.onboardingRoute: (context) =>  OnBoardingScreen(),
-
-        
+        "/": (context) => LoginPage(),
+        MyRoutes.changepassRoute: (context) => LoginPage(),
+        MyRoutes.onboardingRoute: (context) => OnBoardingScreen(),
       },
     );
   }

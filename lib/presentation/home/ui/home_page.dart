@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/presentation/login/login_page.dart';
+import 'package:trafficnepal/presentation/login/login_page.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../screens/traffic_four.dart';

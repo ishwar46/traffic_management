@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/presentation/login/login_page.dart';
 import 'package:flutter/widgets.dart';
+import 'package:trafficnepal/presentation/login/login_page.dart';
 
 import '../../../data/traffic_light_data.dart';
 
