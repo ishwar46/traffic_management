@@ -49,6 +49,7 @@ dependencies:
   firebase_crashlytics: ^3.3.3
   easy_dynamic_theme: ^2.3.1
   geolocator: ^9.0.2
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
