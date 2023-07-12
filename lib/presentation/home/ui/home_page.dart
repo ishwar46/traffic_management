@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light_first.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light_four.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light_second.dart';
-import 'package:smartftraffic/presentation/home/ui/traffic_light_third.dart';
 import 'package:smartftraffic/presentation/login/login_page.dart';
 
 import '../../../utils/app_colors.dart';
+import '../../screens/traffic_four.dart';
+import '../../screens/traffic_one.dart';
+import '../../screens/traffic_three.dart';
+import '../../screens/traffic_two.dart';
 
 class Dashboard extends StatefulWidget {
   @override
-  _DashboardState createState() =>
-      _DashboardState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _DashboardState
-    extends State<Dashboard> {
-
+class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +46,7 @@ class _DashboardState
     );
   }
 }
+
 class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
