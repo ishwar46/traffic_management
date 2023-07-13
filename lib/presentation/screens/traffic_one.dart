@@ -188,7 +188,7 @@ class _TrafficLight_OneState extends State<TrafficLight_One>
             builder: (BuildContext context) {
               String enteredCode = "";
               return AlertDialog(
-                title: Text("Enter Code"),
+                title: Text("Enter Emergency Code"),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -227,8 +227,11 @@ class _TrafficLight_OneState extends State<TrafficLight_One>
             },
           );
         },
-        child: Icon(Icons.add),
-        backgroundColor: AppColors.primaryColor,
+        child: Image.asset(
+          "assets/img/siren.png",
+          height: 30,
+        ),
+        backgroundColor: Color.fromARGB(255, 207, 232, 235),
       ),
     );
   }
