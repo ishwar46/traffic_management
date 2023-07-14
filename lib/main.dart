@@ -29,15 +29,6 @@ Future<void> main() async {
     EasyDynamicThemeWidget(child: const MyApp()),
   );
   configLoading();
-
-  //Run app without Firebase
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setSystemUIOverlayStyle(
-  //     const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
-  // runApp(
-  //   EasyDynamicThemeWidget(child: const MyApp()),
-  // );
-  // configLoading();
 }
 
 void configLoading() {

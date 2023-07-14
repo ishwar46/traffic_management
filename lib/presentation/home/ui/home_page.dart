@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/presentation/screens/add_post.dart';
 import 'package:trafficnepal/presentation/screens/emergency_page.dart';
@@ -25,7 +26,9 @@ class _DashboardState extends State<Dashboard> {
         title: Text('Dashboard'),
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            EasyLoading.showInfo('Feature not available yet');
+          },
         ),
         actions: [
           IconButton(

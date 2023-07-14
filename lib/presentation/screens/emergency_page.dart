@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EmergencyPage extends StatefulWidget {
@@ -55,7 +56,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      EasyLoading.showInfo('Feature not available yet');
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

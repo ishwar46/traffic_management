@@ -17,11 +17,9 @@ class _TrafficLightNewState extends State<TrafficLightNew> {
   void initState() {
     super.initState();
     _database.child('traffic_lights').onValue.listen((event) {
-      final lights = event.snapshot.value
-          as Map<dynamic, dynamic>?; // Add null check using 'as' operator
+      final lights = event.snapshot.value as Map<dynamic, dynamic>?;
       setState(() {
-        _isGreenOn =
-            lights?['green'] ?? false; // Make the call conditional using '?'
+        _isGreenOn = lights?['green'] ?? false;
         _isRedOn = lights?['red'] ?? false;
         _isYellowOn = lights?['yellow'] ?? false;
       });
@@ -32,10 +30,10 @@ class _TrafficLightNewState extends State<TrafficLightNew> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Switch(
+        child: ListView(
+          padding: EdgeInsets.all(16.0),
+          children: [
+            buildSwitchTile(
               activeColor: Colors.green,
               inactiveThumbColor: Colors.grey,
               value: _isGreenOn,
@@ -49,14 +47,9 @@ class _TrafficLightNewState extends State<TrafficLightNew> {
                   _postLightStatusToDatabase();
                 });
               },
+              title: 'Green Light',
             ),
-            SizedBox(height: 15.0),
-            Text(
-              _isGreenOn ? 'Green Light ON' : 'Green Light OFF',
-              style: TextStyle(fontSize: 20.0),
-            ),
-            SizedBox(height: 30.0),
-            Switch(
+            buildSwitchTile(
               activeColor: Colors.red,
               inactiveThumbColor: Colors.grey,
               value: _isRedOn,
@@ -70,14 +63,9 @@ class _TrafficLightNewState extends State<TrafficLightNew> {
                   _postLightStatusToDatabase();
                 });
               },
+              title: 'Red Light',
             ),
-            SizedBox(height: 15.0),
-            Text(
-              _isRedOn ? 'Red Light ON' : 'Red Light OFF',
-              style: TextStyle(fontSize: 20.0),
-            ),
-            SizedBox(height: 30.0),
-            Switch(
+            buildSwitchTile(
               activeColor: Colors.yellow,
               inactiveThumbColor: Colors.grey,
               value: _isYellowOn,
@@ -91,14 +79,32 @@ class _TrafficLightNewState extends State<TrafficLightNew> {
                   _postLightStatusToDatabase();
                 });
               },
-            ),
-            SizedBox(height: 15.0),
-            Text(
-              _isYellowOn ? 'Yellow Light ON' : 'Yellow Light OFF',
-              style: TextStyle(fontSize: 20.0),
+              title: 'Yellow Light',
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildSwitchTile({
+    required Color activeColor,
+    required Color inactiveThumbColor,
+    required bool value,
+    required Function(bool) onChanged,
+    required String title,
+  }) {
+    return ListTile(
+      tileColor: Colors.grey[200],
+      leading: Switch(
+        activeColor: activeColor,
+        inactiveThumbColor: inactiveThumbColor,
+        value: value,
+        onChanged: onChanged,
+      ),
+      title: Text(
+        value ? '$title ON' : '$title OFF',
+        style: TextStyle(fontSize: 20.0),
       ),
     );
   }
@@ -109,9 +115,9 @@ class _TrafficLightNewState extends State<TrafficLightNew> {
       'red': _isRedOn,
       'yellow': _isYellowOn,
     }).then((_) {
-      print('Status posted to database!');
+      print('Status updated to database!');
     }).catchError((error) {
-      print('Failed to post status: $error');
+      print('Failed to updated status: $error');
     });
   }
 }
