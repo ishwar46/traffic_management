@@ -10,7 +10,10 @@ class CustomFloatingActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: onPressed,
-      child: Icon(Icons.add),
+      child: Image.asset(
+        "assets/img/siren.png",
+        height: 30,
+      ),
       backgroundColor: AppColors.primaryColor,
     );
   }
