@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/presentation/screens/add_post.dart';
+import 'package:trafficnepal/presentation/screens/emergency_page.dart';
 import 'package:trafficnepal/presentation/screens/testlight.dart';
 
 import '../../../utils/app_colors.dart';
@@ -53,14 +54,14 @@ class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: Column(
           children: [
             Container(
               color: Colors.white,
-              child: TabBar(
+              child: const TabBar(
                 tabs: [
                   Tab(
                     text: 'Light 1',
@@ -73,6 +74,9 @@ class MyTabbedPage extends StatelessWidget {
                   ),
                   Tab(
                     text: 'Light 4',
+                  ),
+                  Tab(
+                    text: 'Emergency',
                   ),
                 ],
                 labelColor: AppColors.primaryColor,
@@ -101,6 +105,9 @@ class MyTabbedPage extends StatelessWidget {
                     // ),
                     Center(
                       child: TrafficLightNew(),
+                    ),
+                    Center(
+                      child: EmergencyPage(),
                     ),
                   ],
                 ),
