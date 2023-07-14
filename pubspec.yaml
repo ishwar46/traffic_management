@@ -38,6 +38,7 @@ dependencies:
   flutter_onboard: ^2.0.0
   local_auth: ^2.1.6
   get: ^4.6.5
+  fluttertoast: ^8.2.2
   change_app_package_name: ^1.1.0
   flutter_easyloading: ^3.0.5
   image_picker: ^1.0.0
@@ -51,7 +52,6 @@ dependencies:
   geolocator: ^9.0.2
   http: ^0.13.4
   firebase_database: ^10.2.3
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
+import 'package:trafficnepal/presentation/screens/add_post.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../screens/traffic_four.dart';
@@ -95,7 +96,7 @@ class MyTabbedPage extends StatelessWidget {
                       child: TrafficLight_Three(),
                     ),
                     Center(
-                      child: TrafficLight_Four(),
+                      child: TrafficLightPostScreen(),
                     ),
                   ],
                 ),
