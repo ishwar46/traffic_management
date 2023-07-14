@@ -1,36 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:trafficnepal/presentation/login/login_page.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-import '../../../data/traffic_light_data.dart';
+// Enum for light state
+enum LightState { red, yellow, green }
 
-import '../../../utils/app_colors.dart';
+class TrafficLight {
+  final String id;
+  LightState state;
+  bool isOn;
 
-class TrafficLight_Three extends StatefulWidget {
-  @override
-  _TrafficLight_ThreeState createState() => _TrafficLight_ThreeState();
+  TrafficLight({required this.id, required this.state, required this.isOn});
 }
 
-class _TrafficLight_ThreeState extends State<TrafficLight_Three>
-    with AutomaticKeepAliveClientMixin<TrafficLight_Three> {
+class TrafficLightThree extends StatefulWidget {
+  @override
+  _TrafficLightThreeState createState() => _TrafficLightThreeState();
+}
+
+class _TrafficLightThreeState extends State<TrafficLightThree>
+    with AutomaticKeepAliveClientMixin<TrafficLightThree> {
   List<TrafficLight> trafficLights = [];
+  final DatabaseReference _database =
+      FirebaseDatabase.instance.reference().child('traffic_lights');
 
   bool get wantKeepAlive => true;
 
-  //Toggle light
+  @override
+  void initState() {
+    super.initState();
+    //_loadTrafficLights();
+  }
+
+  // void _loadTrafficLights() {
+  //   _database.onValue.listen((event) {
+  //     final lights = Map<String, dynamic>.from(event.snapshot.value);
+  //     setState(() {
+  //       trafficLights = lights.entries
+  //           .map(
+  //             (entry) => TrafficLight(
+  //               id: entry.key,
+  //               state: _parseLightState(entry.value['state']),
+  //               isOn: entry.value['isOn'],
+  //             ),
+  //           )
+  //           .toList();
+  //     });
+  //   });
+  // }
+
+  LightState _parseLightState(String value) {
+    switch (value) {
+      case 'red':
+        return LightState.red;
+      case 'yellow':
+        return LightState.yellow;
+      case 'green':
+        return LightState.green;
+      default:
+        return LightState.red;
+    }
+  }
+
+  // Toggle light
   void toggleLight(String id) {
-    setState(() {
-      trafficLights.forEach((light) {
-        if (light.id == id) {
-          light.isOn = !light.isOn;
-        } else {
-          light.isOn = false;
-        }
-      });
+    final light = trafficLights.firstWhere((light) => light.id == id);
+    final nextState = getNextLightState(light.state);
+    final isOn = nextState == LightState.green;
+
+    _database.child(id).update({
+      'state': nextState.toString().split('.').last,
+      'isOn': isOn,
+    }).then((_) {
+      print('Light $id state updated!');
+    }).catchError((error) {
+      print('Failed to update light state: $error');
     });
   }
 
-//next light state
+  // Next light state
   LightState getNextLightState(LightState currentState) {
     switch (currentState) {
       case LightState.red:
@@ -39,10 +86,12 @@ class _TrafficLight_ThreeState extends State<TrafficLight_Three>
         return LightState.red;
       case LightState.green:
         return LightState.yellow;
+      default:
+        return LightState.red;
     }
   }
 
-  //light icon
+  // Light icon
   IconData getLightIcon(LightState state) {
     switch (state) {
       case LightState.red:
@@ -51,10 +100,12 @@ class _TrafficLight_ThreeState extends State<TrafficLight_Three>
         return Icons.trip_origin;
       case LightState.green:
         return Icons.trip_origin;
+      default:
+        return Icons.trip_origin;
     }
   }
 
-  //light color
+  // Light color
   Color getLightColor(LightState state) {
     switch (state) {
       case LightState.red:
@@ -63,185 +114,35 @@ class _TrafficLight_ThreeState extends State<TrafficLight_Three>
         return Colors.yellow;
       case LightState.green:
         return Colors.green;
+      default:
+        return Colors.red;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isCodeEntered = false;
-    TextEditingController searchController = TextEditingController();
-    List<TrafficLight> filteredTrafficLights =
-        List<TrafficLight>.from(trafficLights);
-
-    void handleCodeEntry(String code) {
-      if (code == "123") {
-        setState(() {
-          isCodeEntered = true;
-          trafficLights[2].isOn = true;
-          trafficLights[0].isOn = false;
-          trafficLights[1].isOn = false;
-        });
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Code Entered"),
-              content: Text("Emergency code accepted. Green light turned on."),
-              actions: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Invalid Code"),
-              content: Text("Please enter a valid emergency code."),
-              actions: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-      }
-    }
-
-    void filterTrafficLights(String query) {
-      setState(() {
-        filteredTrafficLights = trafficLights.where((light) {
-          final idLower = light.id.toLowerCase();
-          final queryLower = query.toLowerCase();
-          return idLower.contains(queryLower);
-        }).toList();
-      });
-    }
-
-    Future<void> refreshTrafficLights() async {
-      await Future.delayed(Duration(seconds: 1));
-      setState(() {
-        trafficLights = [
-          TrafficLight(id: '1', state: LightState.red, isOn: false),
-          TrafficLight(id: '2', state: LightState.yellow, isOn: false),
-          TrafficLight(id: '3', state: LightState.green, isOn: true),
-        ];
-        filteredTrafficLights = List<TrafficLight>.from(trafficLights);
-      });
-    }
-
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: refreshTrafficLights,
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: ListView.builder(
-                itemCount: filteredTrafficLights.length,
-                itemBuilder: (context, index) {
-                  final light = filteredTrafficLights[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: getLightColor(light.state),
-                      radius: 20,
-                      child: Icon(
-                        getLightIcon(light.state),
-                        color: Colors.white,
-                      ),
-                    ),
-                    title: Text('Light ${light.id}'),
-                    subtitle: Text('${light.state.toString().split('.').last}'),
-                    trailing: Switch(
-                      value: light.isOn,
-                      onChanged: (value) => toggleLight(light.id),
-                    ),
-                    //onTap: () => changeLightState(light.id),
-                  );
-                },
+      body: ListView.builder(
+        itemCount: trafficLights.length,
+        itemBuilder: (context, index) {
+          final light = trafficLights[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundColor: getLightColor(light.state),
+              radius: 20,
+              child: Icon(
+                getLightIcon(light.state),
+                color: Colors.white,
               ),
             ),
-          ],
-        ),
-      ),
-      //cards
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              String enteredCode = "";
-              return AlertDialog(
-                title: Text("Enter Emergency Code"),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      onChanged: (value) {
-                        enteredCode = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Enter code",
-                      ),
-                    ),
-                  ],
-                ),
-                actions: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
-                    ),
-                    onPressed: () {
-                      handleCodeEntry(enteredCode);
-                    },
-                    child: Text("Enter"),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Cancel"),
-                  ),
-                ],
-              );
-            },
+            title: Text('Light ${light.id}'),
+            subtitle: Text('${light.state.toString().split('.').last}'),
+            trailing: Switch(
+              value: light.isOn,
+              onChanged: (value) => toggleLight(light.id),
+            ),
           );
         },
-        child: Image.asset(
-          "assets/img/siren.png",
-          height: 30,
-        ),
-        backgroundColor: Color.fromARGB(255, 207, 232, 235),
-      ),
-    );
-  }
-
-  void _logout() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginPage(),
       ),
     );
   }

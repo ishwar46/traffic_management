@@ -1,0 +1,17 @@
+{
+    "traffic_lights": {
+      "light1": {
+        "state": "red",
+        "isOn": false
+      },
+      "light2": {
+        "state": "yellow",
+        "isOn": false
+      },
+      "light3": {
+        "state": "green",
+        "isOn": true
+      }
+    }
+  }
+  
