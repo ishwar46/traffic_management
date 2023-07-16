@@ -15,6 +15,7 @@ import 'presentation/login/login_page.dart';
 import 'utils/app_colors.dart';
 
 Future<void> main() async {
+  EasyLoading.init();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));

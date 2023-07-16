@@ -12,6 +12,37 @@ class ModePage extends StatefulWidget {
 class _ModePageState extends State<ModePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+  //    void showSuccessMessage(String message) {
+  //   ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       backgroundColor: Colors.green,
+  //       content: Text(message),
+  //       duration: const Duration(seconds: 2),
+  //     ),
+  //   );
+  // }
+  void showSuccessMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Success"),
+          content: Text(message),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +98,14 @@ class _ModePageState extends State<ModePage> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text('Feature Under Development'),
-                        ),
-                      );
+                      showSuccessMessage("Successfully entered manual mode");
+                    
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(
+                      //     backgroundColor: Colors.red,
+                      //     content: Text('Feature Under Development'),
+                      //   ),
+                      // );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
