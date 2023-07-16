@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+
+import '../../../utils/app_colors.dart';
 
 class EastLight extends StatefulWidget {
   @override
@@ -10,8 +14,10 @@ class _EastLightState extends State<EastLight> {
   bool _isGreenOn = false;
   bool _isRedOn = false;
   bool _isYellowOn = false;
+  bool _isTimerRunning = false;
   final DatabaseReference _database =
       FirebaseDatabase.instance.ref('threelights');
+  int _timerDuration = 5;
 
   @override
   void initState() {
@@ -24,6 +30,58 @@ class _EastLightState extends State<EastLight> {
         _isGreenOn = lights?['green'] ?? false;
       });
     });
+  }
+
+  void handleCodeEntry(String code) {
+    if (code == "123") {
+      setState(() {
+        _isGreenOn = true;
+        _isRedOn = false;
+        _isYellowOn = false;
+      });
+      _postLightStatusToDatabase();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Code Entered"),
+            content: Text("Emergency code accepted. Green light turned on."),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Invalid Code"),
+            content: Text("Please enter a valid emergency code."),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -75,14 +133,70 @@ class _EastLightState extends State<EastLight> {
                   if (newValue) {
                     _isRedOn = false;
                     _isYellowOn = false;
+                    _startTimer();
+                  } else {
+                    _stopTimer();
                   }
                   _postLightStatusToDatabase();
                 });
               },
               title: 'Green Light',
             ),
+            if (_isTimerRunning) buildTimerWidget(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              String enteredCode = "";
+              return AlertDialog(
+                title: Text("Enter Emergency Code"),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        enteredCode = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Enter code",
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                    onPressed: () {
+                      handleCodeEntry(enteredCode);
+                    },
+                    child: Text("Enter"),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Cancel"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Image.asset(
+          "assets/img/siren.png",
+          height: 30,
+        ),
+        backgroundColor: Color.fromARGB(255, 207, 232, 235),
       ),
     );
   }
@@ -95,7 +209,7 @@ class _EastLightState extends State<EastLight> {
     required String title,
   }) {
     return ListTile(
-      tileColor: Colors.grey[200],
+      tileColor: Color.fromARGB(255, 255, 255, 255),
       leading: Switch(
         activeColor: activeColor,
         inactiveThumbColor: inactiveThumbColor,
@@ -109,6 +223,25 @@ class _EastLightState extends State<EastLight> {
     );
   }
 
+  Widget buildTimerWidget() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 16.0),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.red,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Text(
+        "Light Turns Red In: $_timerDuration",
+        style: TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
   void _postLightStatusToDatabase() {
     _database.child('eastlight').set({
       'red': _isRedOn,
@@ -117,7 +250,36 @@ class _EastLightState extends State<EastLight> {
     }).then((_) {
       print('Status updated to database!');
     }).catchError((error) {
-      print('Failed to updated status: $error');
+      print('Failed to update status: $error');
     });
+
+    if (_isRedOn) {
+      _database.child('eastlight').update({'red': true});
+    } else {
+      _database.child('eastlight').update({'red': false});
+    }
+  }
+
+  void _startTimer() {
+    _isTimerRunning = true;
+    _timerDuration = 5;
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _timerDuration--;
+      });
+      if (_timerDuration == 0) {
+        timer.cancel();
+        _isTimerRunning = false;
+        setState(() {
+          _isGreenOn = false;
+          _isRedOn = true;
+        });
+        _postLightStatusToDatabase();
+      }
+    });
+  }
+
+  void _stopTimer() {
+    _isTimerRunning = false;
   }
 }

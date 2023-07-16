@@ -24,11 +24,17 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0.0,
-        title: Text('Dashboard'),
+        centerTitle: true,
+        title: Text('Dashboard',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontFamily: "Nunito",
+            )),
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-            EasyLoading.showInfo('Feature not available yet');
+            //EasyLoading.showInfo('Feature not available yet');
           },
         ),
         actions: [
@@ -64,11 +70,19 @@ class MyTabbedPage extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              color: Colors.white,
+              color: AppColors.primaryColor,
               child: const TabBar(
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5),
+                  ),
+                  color: Colors.white,
+                ),
+                isScrollable: true,
                 tabs: [
                   Tab(
-                    text: 'Emergency',
+                    text: 'MODES',
                   ),
                   Tab(
                     text: 'EAST',
@@ -87,7 +101,7 @@ class MyTabbedPage extends StatelessWidget {
                   )
                 ],
                 labelColor: AppColors.primaryColor,
-                unselectedLabelColor: Colors.black,
+                unselectedLabelColor: Colors.white,
                 indicatorColor: AppColors.primaryColor,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorWeight: 2.0,

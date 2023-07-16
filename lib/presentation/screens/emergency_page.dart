@@ -10,9 +10,12 @@ class EmergencyPage extends StatefulWidget {
 }
 
 class _EmergencyPageState extends State<EmergencyPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -26,19 +29,26 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Feature Under Development'),
+                        ),
+                      );
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/img/west.png',
+                          "assets/img/system.png",
                           height: 100,
                         ),
                         const SizedBox(
                           height: 18,
                         ),
                         Text(
-                          "WEST",
+                          "AUTO MODE",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 12.0,
@@ -57,85 +67,25 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      EasyLoading.showInfo('Feature not available yet');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text('Feature Under Development'),
+                        ),
+                      );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/img/east.png',
+                          "assets/img/policeman.png",
                           height: 100,
                         ),
                         const SizedBox(
                           height: 18,
                         ),
                         Text(
-                          "EAST",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.0,
-                              fontFamily: GoogleFonts.nunito().fontFamily),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Card(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/img/north.png',
-                          height: 100,
-                        ),
-                        const SizedBox(
-                          height: 18,
-                        ),
-                        Text(
-                          "NORTH",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.0,
-                              fontFamily: GoogleFonts.nunito().fontFamily),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 20),
-                Card(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/img/south.png',
-                          height: 100,
-                        ),
-                        const SizedBox(
-                          height: 18,
-                        ),
-                        Text(
-                          "SOUTH",
+                          "MANUAL MODE",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 12.0,
