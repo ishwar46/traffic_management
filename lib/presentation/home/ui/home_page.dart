@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
-import 'package:trafficnepal/presentation/screens/add_post.dart';
 import 'package:trafficnepal/presentation/screens/emergency_page.dart';
+import 'package:trafficnepal/presentation/screens/south/south_light.dart';
 import 'package:trafficnepal/presentation/screens/testlight.dart';
 
 import '../../../utils/app_colors.dart';
-import '../../screens/traffic_four.dart';
+import '../../screens/east/east_light.dart';
+import '../../screens/north/north_light.dart';
 import '../../screens/traffic_one.dart';
-import '../../screens/traffic_three.dart';
 import '../../screens/traffic_two.dart';
+import '../../screens/west/westlight.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: Column(
@@ -67,20 +68,23 @@ class MyTabbedPage extends StatelessWidget {
               child: const TabBar(
                 tabs: [
                   Tab(
-                    text: 'Light 1',
-                  ),
-                  Tab(
-                    text: 'Light 2',
-                  ),
-                  Tab(
-                    text: 'Light 3',
-                  ),
-                  Tab(
-                    text: 'Light 4',
-                  ),
-                  Tab(
                     text: 'Emergency',
                   ),
+                  Tab(
+                    text: 'EAST',
+                  ),
+                  Tab(
+                    text: 'WEST',
+                  ),
+                  Tab(
+                    text: 'NORTH',
+                  ),
+                  Tab(
+                    text: 'SOUTH',
+                  ),
+                  Tab(
+                    text: 'TEST',
+                  )
                 ],
                 labelColor: AppColors.primaryColor,
                 unselectedLabelColor: Colors.black,
@@ -95,22 +99,22 @@ class MyTabbedPage extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     Center(
-                      child: TrafficLight_One(),
-                    ),
-                    Center(
-                      child: TrafficLight_Two(),
-                    ),
-                    Center(
-                      child: TrafficLightThree(),
-                    ),
-                    // Center(
-                    //   child: TrafficLightPostScreen(),
-                    // ),
-                    Center(
-                      child: TrafficLightNew(),
-                    ),
-                    Center(
                       child: EmergencyPage(),
+                    ),
+                    Center(
+                      child: EastLight(),
+                    ),
+                    Center(
+                      child: WestLight(),
+                    ),
+                    Center(
+                      child: NorthLight(),
+                    ),
+                    Center(
+                      child: SouthLight(),
+                    ),
+                    Center(
+                      child: TrafficLight_One(),
                     ),
                   ],
                 ),
