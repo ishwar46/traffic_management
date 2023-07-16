@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
+import 'package:trafficnepal/presentation/screens/emergency_page.dart';
+import 'package:trafficnepal/presentation/screens/south/south_light.dart';
+import 'package:trafficnepal/presentation/screens/testlight.dart';
 
 import '../../../utils/app_colors.dart';
-import '../../screens/traffic_four.dart';
+import '../../screens/east/east_light.dart';
+import '../../screens/north/north_light.dart';
 import '../../screens/traffic_one.dart';
-import '../../screens/traffic_three.dart';
 import '../../screens/traffic_two.dart';
+import '../../screens/west/westlight.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -19,10 +24,18 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0.0,
-        title: Text('Dashboard'),
+        centerTitle: true,
+        title: Text('Dashboard',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontFamily: "Nunito",
+            )),
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            //EasyLoading.showInfo('Feature not available yet');
+          },
         ),
         actions: [
           IconButton(
@@ -51,30 +64,44 @@ class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 6,
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: Column(
           children: [
             Container(
-              color: Colors.white,
-              child: TabBar(
+              color: AppColors.primaryColor,
+              child: const TabBar(
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5),
+                  ),
+                  color: Colors.white,
+                ),
+                isScrollable: true,
                 tabs: [
                   Tab(
-                    text: 'Light 1',
+                    text: 'MODES',
                   ),
                   Tab(
-                    text: 'Light 2',
+                    text: 'EAST',
                   ),
                   Tab(
-                    text: 'Light 3',
+                    text: 'WEST',
                   ),
                   Tab(
-                    text: 'Light 4',
+                    text: 'NORTH',
                   ),
+                  Tab(
+                    text: 'SOUTH',
+                  ),
+                  Tab(
+                    text: 'TEST',
+                  )
                 ],
                 labelColor: AppColors.primaryColor,
-                unselectedLabelColor: Colors.black,
+                unselectedLabelColor: Colors.white,
                 indicatorColor: AppColors.primaryColor,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorWeight: 2.0,
@@ -86,16 +113,22 @@ class MyTabbedPage extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     Center(
+                      child: EmergencyPage(),
+                    ),
+                    Center(
+                      child: EastLight(),
+                    ),
+                    Center(
+                      child: WestLight(),
+                    ),
+                    Center(
+                      child: NorthLight(),
+                    ),
+                    Center(
+                      child: SouthLight(),
+                    ),
+                    Center(
                       child: TrafficLight_One(),
-                    ),
-                    Center(
-                      child: TrafficLight_Two(),
-                    ),
-                    Center(
-                      child: TrafficLight_Three(),
-                    ),
-                    Center(
-                      child: TrafficLight_Four(),
                     ),
                   ],
                 ),

@@ -12,6 +12,8 @@ class TrafficLight {
   bool isOn;
 
   TrafficLight({required this.id, required this.state, required this.isOn});
+
+  static fromJson(key, value) {}
 }
 
 List<TrafficLight> trafficLights = [

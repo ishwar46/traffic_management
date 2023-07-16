@@ -1,12 +1,14 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
+import 'package:trafficnepal/presentation/home/ui/home_page.dart';
+import 'package:trafficnepal/presentation/screens/post_screen.dart';
 import 'package:trafficnepal/routes.dart';
 import 'package:trafficnepal/utils/theme.dart';
 import 'presentation/login/login_page.dart';
@@ -27,15 +29,6 @@ Future<void> main() async {
     EasyDynamicThemeWidget(child: const MyApp()),
   );
   configLoading();
-
-  //Run app without Firebase
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setSystemUIOverlayStyle(
-  //     const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
-  // runApp(
-  //   EasyDynamicThemeWidget(child: const MyApp()),
-  // );
-  // configLoading();
 }
 
 void configLoading() {
@@ -66,9 +59,9 @@ class MyApp extends StatelessWidget {
       title: 'SmartTrafficNepal',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      initialRoute: MyRoutes.onboardingRoute,
+      //initialRoute: MyRoutes.onboardingRoute,
       routes: {
-        "/": (context) => LoginPage(),
+        "/": (context) => Dashboard(),
         MyRoutes.changepassRoute: (context) => LoginPage(),
         MyRoutes.onboardingRoute: (context) => OnBoardingScreen(),
       },
