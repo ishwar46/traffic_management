@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EmergencyPage extends StatefulWidget {
-  const EmergencyPage({Key? key}) : super(key: key);
+class ModePage extends StatefulWidget {
+  const ModePage({Key? key}) : super(key: key);
 
   @override
-  _EmergencyPageState createState() => _EmergencyPageState();
+  _ModePageState createState() => _ModePageState();
 }
 
-class _EmergencyPageState extends State<EmergencyPage> {
+class _ModePageState extends State<ModePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override

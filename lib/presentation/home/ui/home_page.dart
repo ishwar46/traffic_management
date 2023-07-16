@@ -113,7 +113,7 @@ class MyTabbedPage extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     Center(
-                      child: EmergencyPage(),
+                      child: ModePage(),
                     ),
                     Center(
                       child: EastLight(),
