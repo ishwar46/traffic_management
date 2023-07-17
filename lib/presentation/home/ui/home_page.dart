@@ -25,7 +25,7 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: AppColors.primaryColor,
         elevation: 0.0,
         centerTitle: true,
-        title: Text('Dashboard',
+        title: Text('Dashboard'.toUpperCase(),
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.0,
