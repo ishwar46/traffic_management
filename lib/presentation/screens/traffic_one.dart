@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
-import 'package:firebase_database/firebase_database.dart';
 import '../../../data/traffic_light_data.dart';
 
 import '../../../utils/app_colors.dart';
