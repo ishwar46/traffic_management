@@ -12,7 +12,6 @@ class ModePage extends StatefulWidget {
 class _ModePageState extends State<ModePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   //    void showSuccessMessage(String message) {
   //   ScaffoldMessenger.of(context).hideCurrentSnackBar();
   //   ScaffoldMessenger.of(context).showSnackBar(
@@ -99,13 +98,6 @@ class _ModePageState extends State<ModePage> {
                   child: InkWell(
                     onTap: () {
                       showSuccessMessage("Successfully entered manual mode");
-                    
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   const SnackBar(
-                      //     backgroundColor: Colors.red,
-                      //     content: Text('Feature Under Development'),
-                      //   ),
-                      // );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
