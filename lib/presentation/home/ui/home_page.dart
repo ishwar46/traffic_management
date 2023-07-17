@@ -64,7 +64,7 @@ class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6,
+      length: 5,
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: Column(
@@ -96,9 +96,6 @@ class MyTabbedPage extends StatelessWidget {
                   Tab(
                     text: 'SOUTH',
                   ),
-                  Tab(
-                    text: 'TEST',
-                  )
                 ],
                 labelColor: AppColors.primaryColor,
                 unselectedLabelColor: Colors.white,
@@ -126,9 +123,6 @@ class MyTabbedPage extends StatelessWidget {
                     ),
                     Center(
                       child: SouthLight(),
-                    ),
-                    Center(
-                      child: TrafficLight_One(),
                     ),
                   ],
                 ),
