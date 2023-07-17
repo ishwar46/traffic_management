@@ -51,6 +51,7 @@ dependencies:
   easy_dynamic_theme: ^2.3.1
   geolocator: ^9.0.2
   http: ^0.13.4
+  animate_do: ^3.0.2
   firebase_database: ^10.2.3
   iconify_flutter: ^0.0.5
   flutter_launcher_icons: ^0.13.1
