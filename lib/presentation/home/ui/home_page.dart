@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/presentation/screens/emergency_page.dart';
 import 'package:trafficnepal/presentation/screens/south/south_light.dart';
-import 'package:trafficnepal/presentation/screens/testlight.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../screens/east/east_light.dart';
 import '../../screens/north/north_light.dart';
-import '../../screens/traffic_one.dart';
-import '../../screens/traffic_two.dart';
 import '../../screens/west/westlight.dart';
 
 class Dashboard extends StatefulWidget {
@@ -26,20 +22,20 @@ class _DashboardState extends State<Dashboard> {
         elevation: 0.0,
         centerTitle: true,
         title: Text('Dashboard'.toUpperCase(),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20.0,
               fontFamily: "Nunito",
             )),
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             //EasyLoading.showInfo('Feature not available yet');
           },
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout_rounded),
+            icon: const Icon(Icons.logout_rounded),
             onPressed: () {
               _logout();
             },
@@ -54,7 +50,7 @@ class _DashboardState extends State<Dashboard> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginPage(),
+        builder: (context) => const LoginPage(),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
+import 'package:trafficnepal/presentation/home/splash_screen.dart';
 import 'package:trafficnepal/presentation/home/ui/home_page.dart';
 import 'package:trafficnepal/presentation/screens/post_screen.dart';
 import 'package:trafficnepal/routes.dart';
@@ -61,10 +62,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       //initialRoute: MyRoutes.onboardingRoute,
+      home: SplashScreen(),
       routes: {
-        "/": (context) => Dashboard(),
+        // "/": (context) => Dashboard(),
         MyRoutes.changepassRoute: (context) => LoginPage(),
         MyRoutes.onboardingRoute: (context) => OnBoardingScreen(),
+        MyRoutes.homepageRoute: (context) => Dashboard(),
+        MyRoutes.splashRoute: (context) => SplashScreen(),
       },
     );
   }
