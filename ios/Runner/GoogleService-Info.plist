@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>477414892925-idsad5poi73fedqiph2bs25g7ds33s80.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.477414892925-idsad5poi73fedqiph2bs25g7ds33s80</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBzzmpAssCVEVWcDQUd359OsEL6RekSo2Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>477414892925</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.closedai.smarttraffic</string>
+	<key>PROJECT_ID</key>
+	<string>iotproj-55a78</string>
+	<key>STORAGE_BUCKET</key>
+	<string>iotproj-55a78.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:477414892925:ios:6014726b5b68eebceed814</string>
+	<key>DATABASE_URL</key>
+	<string>https://iotproj-55a78-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
