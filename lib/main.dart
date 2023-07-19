@@ -69,7 +69,6 @@ class MyApp extends StatelessWidget {
         MyRoutes.onboardingRoute: (context) => const OnBoardingScreen(),
         MyRoutes.homepageRoute: (context) => Dashboard(),
         MyRoutes.splashRoute: (context) => SplashScreen(),
-        MyRoutes.settingRoute: (context) => SettingsPage(),
       },
     );
   }
