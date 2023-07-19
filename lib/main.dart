@@ -9,7 +9,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
 import 'package:trafficnepal/presentation/home/splash_screen.dart';
 import 'package:trafficnepal/presentation/home/ui/home_page.dart';
-import 'package:trafficnepal/presentation/screens/post_screen.dart';
+import 'package:trafficnepal/presentation/screens/setting_page.dart';
 import 'package:trafficnepal/routes.dart';
 import 'package:trafficnepal/utils/theme.dart';
 import 'presentation/login/login_page.dart';
@@ -65,10 +65,11 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         // "/": (context) => Dashboard(),
-        MyRoutes.changepassRoute: (context) => LoginPage(),
-        MyRoutes.onboardingRoute: (context) => OnBoardingScreen(),
+        MyRoutes.changepassRoute: (context) => const LoginPage(),
+        MyRoutes.onboardingRoute: (context) => const OnBoardingScreen(),
         MyRoutes.homepageRoute: (context) => Dashboard(),
         MyRoutes.splashRoute: (context) => SplashScreen(),
+        MyRoutes.settingRoute: (context) => SettingsPage(),
       },
     );
   }
