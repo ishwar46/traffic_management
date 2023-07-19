@@ -2,7 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/utils/app_colors.dart';
 
