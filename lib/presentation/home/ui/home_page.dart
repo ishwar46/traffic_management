@@ -7,7 +7,6 @@ import 'package:trafficnepal/presentation/screens/south/south_light.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../../utils/widgets/drawer.dart';
-import '../../../utils/widgets/slider_drawer.dart';
 import '../../screens/east/east_light.dart';
 import '../../screens/north/north_light.dart';
 import '../../screens/west/westlight.dart';
@@ -23,7 +22,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey, // Add this key to the Scaffold.
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         elevation: 0.0,
@@ -39,7 +38,6 @@ class _DashboardState extends State<Dashboard> {
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
-            // Open the drawer using the key.
             _scaffoldKey.currentState?.openDrawer();
           },
         ),
@@ -64,7 +62,7 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
       body: MyTabbedPage(),
-      drawer: DrawerWidget(), // Place the DrawerWidget here.
+      drawer: DrawerWidget(),
     );
   }
 }

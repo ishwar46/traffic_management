@@ -17,7 +17,7 @@ class _SouthLightState extends State<SouthLight> {
   bool _isTimerRunning = false;
   final DatabaseReference _database =
       FirebaseDatabase.instance.ref('threelights');
-  int _timerDuration = 5;
+  int _timerDuration = 12;
 
   void handleCodeEntry(String code) {
     if (code == "123") {
@@ -83,6 +83,7 @@ class _SouthLightState extends State<SouthLight> {
       });
     });
   }
+
   Color getLightColor(LightState state) {
     switch (state) {
       case LightState.red:
@@ -93,7 +94,8 @@ class _SouthLightState extends State<SouthLight> {
         return Colors.green;
     }
   }
-    //light icon
+
+  //light icon
   IconData getLightIcon(LightState state) {
     switch (state) {
       case LightState.red:
@@ -108,266 +110,153 @@ class _SouthLightState extends State<SouthLight> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: RefreshIndicator(
-      onRefresh: () async {},
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: ListView(
-              padding: EdgeInsets.all(16.0),
-              children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: getLightColor(LightState.red),
-                    radius: 20,
-                    child: Icon(
-                      getLightIcon(LightState.red),
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Text('Red Light'),
-                  subtitle: Text(_isRedOn ? 'ON' : 'OFF'),
-                  trailing: Switch(
-                    value: _isRedOn,
-                    onChanged: (value) {
-                      setState(() {
-                        _isRedOn = value;
-                        if (value) {
-                          _isGreenOn = false;
-                          _isYellowOn = false;
-                        }
-                        _postLightStatusToDatabase();
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: getLightColor(LightState.yellow),
-                    radius: 20,
-                    child: Icon(
-                      getLightIcon(LightState.yellow),
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Text('Yellow Light'),
-                  subtitle: Text(_isYellowOn ? 'ON' : 'OFF'),
-                  trailing: Switch(
-                    value: _isYellowOn,
-                    onChanged: (value) {
-                      setState(() {
-                        _isYellowOn = value;
-                        if (value) {
-                          _isGreenOn = false;
-                          _isRedOn = false;
-                        }
-                        _postLightStatusToDatabase();
-                      });
-                    },
-                  ),
-                ),
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: getLightColor(LightState.green),
-                    radius: 20,
-                    child: Icon(
-                      getLightIcon(LightState.green),
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Text('Green Light'),
-                  subtitle: Text(_isGreenOn ? 'ON' : 'OFF'),
-                  trailing: Switch(
-                    value: _isGreenOn,
-                    onChanged: (value) {
-                      setState(() {
-                        _isGreenOn = value;
-                        if (value) {
-                          _isRedOn = false;
-                          _isYellowOn = false;
-                          _startTimer();
-                        } else {
-                          _stopTimer();
-                        }
-                        _postLightStatusToDatabase();
-                      });
-                    },
-                  ),
-                ),
-                if (_isTimerRunning) buildTimerWidget(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            String enteredCode = "";
-            return AlertDialog(
-              title: Text("Enter Emergency Code"),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
+      body: RefreshIndicator(
+        onRefresh: () async {},
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: ListView(
+                padding: EdgeInsets.all(16.0),
                 children: [
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      enteredCode = value;
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Enter code",
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: getLightColor(LightState.red),
+                      radius: 20,
+                      child: Icon(
+                        getLightIcon(LightState.red),
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text('Red Light'),
+                    subtitle: Text(_isRedOn ? 'ON' : 'OFF'),
+                    trailing: Switch(
+                      value: _isRedOn,
+                      onChanged: (value) {
+                        setState(() {
+                          _isRedOn = value;
+                          if (value) {
+                            _isGreenOn = false;
+                            _isYellowOn = false;
+                          }
+                          _postLightStatusToDatabase();
+                        });
+                      },
                     ),
                   ),
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: getLightColor(LightState.yellow),
+                      radius: 20,
+                      child: Icon(
+                        getLightIcon(LightState.yellow),
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text('Yellow Light'),
+                    subtitle: Text(_isYellowOn ? 'ON' : 'OFF'),
+                    trailing: Switch(
+                      value: _isYellowOn,
+                      onChanged: (value) {
+                        setState(() {
+                          _isYellowOn = value;
+                          if (value) {
+                            _isGreenOn = false;
+                            _isRedOn = false;
+                          }
+                          _postLightStatusToDatabase();
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: getLightColor(LightState.green),
+                      radius: 20,
+                      child: Icon(
+                        getLightIcon(LightState.green),
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text('Green Light'),
+                    subtitle: Text(_isGreenOn ? 'ON' : 'OFF'),
+                    trailing: Switch(
+                      value: _isGreenOn,
+                      onChanged: (value) {
+                        setState(() {
+                          _isGreenOn = value;
+                          if (value) {
+                            _isRedOn = false;
+                            _isYellowOn = false;
+                            _startTimer();
+                          } else {
+                            _stopTimer();
+                          }
+                          _postLightStatusToDatabase();
+                        });
+                      },
+                    ),
+                  ),
+                  if (_isTimerRunning) buildTimerWidget(),
                 ],
               ),
-              actions: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                  ),
-                  onPressed: () {
-                    handleCodeEntry(enteredCode);
-                  },
-                  child: Text("Enter"),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("Cancel"),
-                ),
-              ],
-            );
-          },
-        );
-      },
-      child: Image.asset(
-        "assets/img/siren.png",
-        height: 30,
+            ),
+          ],
+        ),
       ),
-      backgroundColor: Color.fromARGB(255, 207, 232, 235),
-    ),
-  );
-    // return Scaffold(
-    //   body: Center(
-    //     child: ListView(
-    //       padding: EdgeInsets.all(16.0),
-    //       children: [
-    //         buildSwitchTile(
-    //           activeColor: Colors.red,
-    //           inactiveThumbColor: Colors.grey,
-    //           value: _isRedOn,
-    //           onChanged: (bool newValue) {
-    //             setState(() {
-    //               _isRedOn = newValue;
-    //               if (newValue) {
-    //                 _isGreenOn = false;
-    //                 _isYellowOn = false;
-    //               }
-    //               _postLightStatusToDatabase();
-    //             });
-    //           },
-    //           title: 'Red Light',
-    //         ),
-    //         buildSwitchTile(
-    //           activeColor: Colors.yellow,
-    //           inactiveThumbColor: Colors.grey,
-    //           value: _isYellowOn,
-    //           onChanged: (bool newValue) {
-    //             setState(() {
-    //               _isYellowOn = newValue;
-    //               if (newValue) {
-    //                 _isGreenOn = false;
-    //                 _isRedOn = false;
-    //               }
-    //               _postLightStatusToDatabase();
-    //             });
-    //           },
-    //           title: 'Yellow Light',
-    //         ),
-    //         buildSwitchTile(
-    //           activeColor: Colors.green,
-    //           inactiveThumbColor: Colors.grey,
-    //           value: _isGreenOn,
-    //           onChanged: (bool newValue) {
-    //             setState(() {
-    //               _isGreenOn = newValue;
-    //               if (newValue) {
-    //                 _isRedOn = false;
-    //                 _isYellowOn = false;
-    //                 _startTimer();
-    //               } else {
-    //                 _stopTimer();
-    //               }
-    //               _postLightStatusToDatabase();
-    //             });
-    //           },
-    //           title: 'Green Light',
-    //         ),
-    //         if (_isTimerRunning) buildTimerWidget(),
-    //       ],
-    //     ),
-    //   ),
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: () {
-    //       showDialog(
-    //         context: context,
-    //         builder: (BuildContext context) {
-    //           String enteredCode = "";
-    //           return AlertDialog(
-    //             title: Text("Enter Emergency Code"),
-    //             content: Column(
-    //               mainAxisSize: MainAxisSize.min,
-    //               children: [
-    //                 TextField(
-    //                   keyboardType: TextInputType.number,
-    //                   onChanged: (value) {
-    //                     enteredCode = value;
-    //                   },
-    //                   decoration: InputDecoration(
-    //                     hintText: "Enter code",
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //             actions: [
-    //               ElevatedButton(
-    //                 style: ElevatedButton.styleFrom(
-    //                   primary: Colors.green,
-    //                 ),
-    //                 onPressed: () {
-    //                   handleCodeEntry(enteredCode);
-    //                 },
-    //                 child: Text("Enter"),
-    //               ),
-    //               ElevatedButton(
-    //                 style: ElevatedButton.styleFrom(
-    //                   primary: Colors.red,
-    //                 ),
-    //                 onPressed: () {
-    //                   Navigator.of(context).pop();
-    //                 },
-    //                 child: Text("Cancel"),
-    //               ),
-    //             ],
-    //           );
-    //         },
-    //       );
-    //     },
-    //     child: Image.asset(
-    //       "assets/img/siren.png",
-    //       height: 30,
-    //     ),
-    //     backgroundColor: Color.fromARGB(255, 207, 232, 235),
-    //   ),
-    // );
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              String enteredCode = "";
+              return AlertDialog(
+                title: Text("Enter Emergency Code"),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        enteredCode = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Enter code",
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
+                    onPressed: () {
+                      handleCodeEntry(enteredCode);
+                    },
+                    child: Text("Enter"),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Cancel"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Image.asset(
+          "assets/img/siren.png",
+          height: 30,
+        ),
+        backgroundColor: Color.fromARGB(255, 207, 232, 235),
+      ),
+    );
   }
 
   Widget buildSwitchTile({
@@ -431,7 +320,7 @@ class _SouthLightState extends State<SouthLight> {
 
   void _startTimer() {
     _isTimerRunning = true;
-    _timerDuration = 5;
+    _timerDuration = 12;
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _timerDuration--;
