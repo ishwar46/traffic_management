@@ -1,12 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/presentation/screens/emergency_page.dart';
-import 'package:trafficnepal/presentation/screens/setting_page.dart';
 import 'package:trafficnepal/presentation/screens/south/south_light.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../../utils/widgets/drawer.dart';
+import '../../login/login_page_new.dart';
 import '../../screens/east/east_light.dart';
 import '../../screens/north/north_light.dart';
 import '../../screens/west/westlight.dart';
@@ -18,6 +19,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +47,8 @@ class _DashboardState extends State<Dashboard> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
-                ),
-              );
+              Navigator.pushNamed(context, "/setting");
+          
             },
           ),
           IconButton(
@@ -85,7 +83,11 @@ void _logout(BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const LoginPage(),
+          builder: (context) =>  LoginPage(
+            onTap: () {
+              _logout(context);
+            },
+          ),
         ),
       );
     },

@@ -21,7 +21,8 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
     _controller.addListener(() {
       if (_controller.isCompleted) {
-        Navigator.of(context).pushReplacementNamed('/homePage');
+        //Navigator.of(context).pushReplacementNamed('/homePage');
+        Navigator.of(context).pushReplacementNamed('/authPage');
       }
     });
   }

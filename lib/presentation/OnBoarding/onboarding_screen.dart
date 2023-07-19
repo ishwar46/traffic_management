@@ -120,10 +120,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   void _onDone() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => LoginPage(),
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (context) => LoginPage(),
+    //   ),
+    // );
   }
 }

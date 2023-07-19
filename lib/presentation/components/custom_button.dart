@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:trafficnepal/utils/app_colors.dart';
 
-class CustomFormButton extends StatelessWidget {
-  final String innerText;
-  final void Function()? onPressed;
-  const CustomFormButton({Key? key, required this.innerText, required this.onPressed}) : super(key: key);
+class MyButton extends StatelessWidget {
+  void Function()? onTap;
+  final String text;
+
+  MyButton({super.key, required this.onTap, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      width: 360,
-      height: 50,
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor,
-         borderRadius: BorderRadius.circular(10),
-      ),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(innerText, style: const TextStyle(color: Colors.white, fontSize: 20),),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.symmetric(horizontal: 35),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.deepPurple.shade300,
+                  Colors.purple.shade200,
+                ]),
+            borderRadius: BorderRadius.circular(10)),
+        child: Center(
+            child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        )),
       ),
     );
   }

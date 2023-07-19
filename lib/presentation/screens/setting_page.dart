@@ -1,9 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/utils/app_colors.dart';
+
+import '../login/login_page_new.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -49,6 +52,32 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               SettingsGroup(
                 items: [
+                  SettingsItem(
+  onTap: () {
+    // Get the current user from Firebase Auth
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String email = user.email ?? "Email not available"; // If email is null, set a default value
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('User Email: $email'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('User not logged in.'),
+        ),
+      );
+    }
+  },
+  icons: CupertinoIcons.repeat,
+  title: "Change email",
+),
+
                   SettingsItem(
                     onTap: () {},
                     icons: CupertinoIcons.pencil_outline,
@@ -199,7 +228,7 @@ class _SettingsPageState extends State<SettingsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPage(),
+            builder: (context) => LoginPage(onTap: () {}),
           ),
         );
       },

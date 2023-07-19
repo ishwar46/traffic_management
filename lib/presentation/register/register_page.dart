@@ -1,180 +1,274 @@
-import 'dart:io';
-
-import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../utils/widgets/input_textfield.dart';
 import '../components/custom_button.dart';
-import '../components/page_header.dart';
-import '../components/page_heading.dart';
-import '../login/login_page.dart';
+import '../components/square_tile.dart';
+import '../components/textfield.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class RegPage extends StatefulWidget {
+  final Function()? onTap;
+  RegPage({super.key, required this.onTap});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegPage> createState() => _RegPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegPageState extends State<RegPage> {
+  //text editing controllers
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _phonenumberController = TextEditingController();
+  final _fullNameController = TextEditingController();
 
-  File? _profileImage;
-
-  final _signupFormKey = GlobalKey<FormState>();
-
-  //Profile image picker
-
-  Future _pickProfileImage() async {
+//register user
+  void SignUserUp() async {
+    //show loading dialog
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+              title: new Text("Dialog Title"),
+              content: new Text("This is my content"),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: Text("Yes"),
+                ),
+                CupertinoDialogAction(
+                  child: Text("No"),
+                )
+              ],
+            ));
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return AlertDialog(
+    //       content: Row(
+    //         children: [
+    //           CircularProgressIndicator(
+    //             valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+    //           ),
+    //           SizedBox(width: 20),
+    //           Text("Please Wait..."),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
+    // try creating the user
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if(image == null) return;
+      // check if password is confirmed
+      if (_passwordController.text == _confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+      } else {
+        // show error message, passwords don't match
+        showErrorMessage("Passwords don't match!");
+      }
+      // pop the loading circle
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      // pop the loading circle
+      Navigator.pop(context);
+      // show error message
+      showErrorMessage(e.code);
+    }
+  }
 
-      final imageTemporary = File(image.path);
-      setState(() => _profileImage = imageTemporary);
-    } on PlatformException catch (e) {
-      debugPrint('Failed to pick image error: $e');
-    }
+  // error message to user
+  void showErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(message),
+          actions: [
+            Text(message),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
-   void _handleSignupUser() {
-    // signup user
-    if (_signupFormKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Submitting data..')),
-      );
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffEEF1F3),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _signupFormKey,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const PageHeader(),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20),),
-                  ),
-                  child: Column(
+                //logo
+                Image.asset(
+                  "assets/images/applogo.png",
+                  height: 100,
+                ),
+
+                //signup message
+                Text(
+                  "Sign Up to continue",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
+                ),
+                SizedBox(height: 20),
+                //login form with text fields
+                //username
+                MyTextField(
+                  controller: _emailController,
+                  hintText: 'Email',
+                  obsecureText: false,
+                ),
+                SizedBox(height: 10),
+                //password
+                MyTextField(
+                  controller: _passwordController,
+                  hintText: 'Password',
+                  obsecureText: false,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                //Confirm password
+                MyTextField(
+                  controller: _confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  obsecureText: false,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                //username
+                MyTextField(
+                  controller: _usernameController,
+                  hintText: 'Username',
+                  obsecureText: false,
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
+                //Full Name
+                MyTextField(
+                  controller: _fullNameController,
+                  hintText: 'Full name',
+                  obsecureText: false,
+                ),
+                //Phone Number
+                SizedBox(
+                  height: 10,
+                ),
+                //Full Name
+                MyTextField(
+                  controller: _phonenumberController,
+                  hintText: 'Phone number',
+                  obsecureText: false,
+                ),
+
+                SizedBox(height: 20),
+                //login button
+
+                MyButton(
+                  text: "Sign Up",
+                  onTap: SignUserUp,
+                ),
+
+                SizedBox(
+                  height: 40,
+                ),
+                //or continue with
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
                     children: [
-                      const PageHeading(title: 'Sign-up',),
-                      SizedBox(
-                        width: 130,
-                        height: 130,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey.shade200,
-                          backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                bottom: 5,
-                                right: 5,
-                                child: GestureDetector(
-                                  onTap: _pickProfileImage,
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue.shade400,
-                                      border: Border.all(color: Colors.white, width: 3),
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                    child: const Icon(
-                                      Icons.camera_alt_sharp,
-                                      color: Colors.white,
-                                      size: 25,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 16,),
-                      CustomInputField(
-                          labelText: 'Name',
-                          hintText: 'Your name',
-                          isDense: true,
-                          validator: (textValue) {
-                            if(textValue == null || textValue.isEmpty) {
-                              return 'Name field is required!';
-                            }
-                            return null;
-                          }
-                      ),
-                      const SizedBox(height: 16,),
-                      CustomInputField(
-                          labelText: 'Email',
-                          hintText: 'Your email id',
-                          isDense: true,
-                          validator: (textValue) {
-                            if(textValue == null || textValue.isEmpty) {
-                              return 'Email is required!';
-                            }
-                            if(!EmailValidator.validate(textValue)) {
-                              return 'Please enter a valid email';
-                            }
-                            return null;
-                          }
-                      ),
-                      const SizedBox(height: 16,),
-                      CustomInputField(
-                          labelText: 'Contact no.',
-                          hintText: 'Your contact number',
-                          isDense: true,
-                          validator: (textValue) {
-                            if(textValue == null || textValue.isEmpty) {
-                              return 'Contact number is required!';
-                            }
-                            return null;
-                          }
-                      ),
-                      const SizedBox(height: 16,),
-                      CustomInputField(
-                        labelText: 'Password',
-                        hintText: 'Your password',
-                        isDense: true,
-                        obscureText: true,
-                        validator: (textValue) {
-                          if(textValue == null || textValue.isEmpty) {
-                            return 'Password is required!';
-                          }
-                          return null;
-                        },
-                        suffixIcon: true,
-                      ),
-                      const SizedBox(height: 22,),
-                      CustomFormButton(innerText: 'Signup', onPressed: _handleSignupUser,),
-                      const SizedBox(height: 18,),
-                      SizedBox(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text('Already have an account ? ', style: TextStyle(fontSize: 13, color: Color(0xff939393), fontWeight: FontWeight.bold),),
-                            GestureDetector(
-                              onTap: () => {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()))
-                              },
-                              child: const Text('Log-in', style: TextStyle(fontSize: 15, color: Color(0xff748288), fontWeight: FontWeight.bold),),
-                            ),
-                          ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          'Or continue with',
+                          style: TextStyle(color: Colors.grey),
                         ),
                       ),
-                      const SizedBox(height: 30,),
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.black,
+                        ),
+                      ),
                     ],
                   ),
+                ),
+
+                SizedBox(
+                  height: 40,
+                ),
+
+                //google + apple sign in buttons
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //google logo
+                    SquareTile(imagePath: "assets/images/google.png"),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    //apple logo
+                    SquareTile(imagePath: "assets/images/apple.png"),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                //not a member? register now
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already a member?",
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: Text(
+                        "Login now",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),
           ),
         ),
+      ),
     );
   }
 }

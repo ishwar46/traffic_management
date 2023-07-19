@@ -49,15 +49,16 @@ dependencies:
   firebase_core: ^2.14.0
   firebase_crashlytics: ^3.3.3
   easy_dynamic_theme: ^2.3.1
-  geolocator: ^9.0.2
   http: ^0.13.4
   animate_do: ^3.0.2
   firebase_database: ^10.2.3
   iconify_flutter: ^0.0.5
   flutter_launcher_icons: ^0.13.1
-  babstrap_settings_screen: ^0.1.5+1
   awesome_dialog: ^3.1.0
-  flutter_slider_drawer: ^2.1.3
+  firebase_auth: ^4.2.0
+  babstrap_settings_screen: ^0.1.5+1
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

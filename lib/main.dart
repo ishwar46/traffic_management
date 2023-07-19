@@ -7,8 +7,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
+import 'package:trafficnepal/presentation/home/auth_page.dart';
 import 'package:trafficnepal/presentation/home/splash_screen.dart';
 import 'package:trafficnepal/presentation/home/ui/home_page.dart';
+import 'package:trafficnepal/presentation/login/login_page_new.dart';
 import 'package:trafficnepal/presentation/screens/setting_page.dart';
 import 'package:trafficnepal/routes.dart';
 import 'package:trafficnepal/utils/theme.dart';
@@ -61,16 +63,29 @@ class MyApp extends StatelessWidget {
       title: 'SmartTrafficNepal',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
-      //initialRoute: MyRoutes.onboardingRoute,
-      home: SplashScreen(),
+      initialRoute: MyRoutes.splashRoute,
       routes: {
-        // "/": (context) => Dashboard(),
-        MyRoutes.changepassRoute: (context) => const LoginPage(),
+        "/": (context) => SplashScreen(),
         MyRoutes.onboardingRoute: (context) => const OnBoardingScreen(),
-        MyRoutes.homepageRoute: (context) => Dashboard(),
+        MyRoutes.dashboardRoute: (context) => Dashboard(),
         MyRoutes.splashRoute: (context) => SplashScreen(),
+        MyRoutes.authRoute: (context) =>  AuthPage(),
         MyRoutes.settingRoute: (context) => SettingsPage(),
       },
     );
   }
+}
+
+class MyRoutes {
+  static const String loginRoute = "/login";
+  static const String splashRoute = "/splash";
+  static const String profileRoute = "/profile";
+  static const String signupRoute = "/signup";
+  static const String faqRoute = "/faqpage";
+  static const String onboardingRoute = "/onboardingRoute";
+  static const String changepassRoute = "/changepassRoute";
+  static const String emergencyRoute = "/emergencyRoute";
+  static const String authRoute = "/authPage";
+  static const String dashboardRoute = "/dashboard";
+  static const String settingRoute = "/setting";
 }
