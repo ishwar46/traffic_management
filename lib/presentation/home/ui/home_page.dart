@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:trafficnepal/presentation/home/ui/parking_page.dart';
 import 'package:trafficnepal/presentation/login/login_page.dart';
 import 'package:trafficnepal/presentation/screens/emergency_page.dart';
 import 'package:trafficnepal/presentation/screens/setting_page.dart';
@@ -96,7 +97,7 @@ class MyTabbedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: Column(
@@ -128,6 +129,9 @@ class MyTabbedPage extends StatelessWidget {
                   Tab(
                     text: 'SOUTH',
                   ),
+                  Tab(
+                    text: 'SLOT LOT',
+                  ),
                 ],
                 labelColor: AppColors.primaryColor,
                 unselectedLabelColor: Colors.white,
@@ -155,6 +159,9 @@ class MyTabbedPage extends StatelessWidget {
                     ),
                     Center(
                       child: SouthLight(),
+                    ),
+                    Center(
+                      child: SlotLot(),
                     ),
                   ],
                 ),

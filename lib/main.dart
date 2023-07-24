@@ -8,10 +8,12 @@ import 'package:get/get.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
 import 'package:trafficnepal/presentation/home/splash_screen.dart';
+import 'package:trafficnepal/presentation/home/ui/automatic.dart';
 import 'package:trafficnepal/presentation/home/ui/home_page.dart';
 import 'package:trafficnepal/presentation/screens/maps.dart';
 import 'package:trafficnepal/routes.dart';
 import 'package:trafficnepal/utils/theme.dart';
+import 'presentation/home/ui/parking_page.dart';
 import 'presentation/login/login_page.dart';
 import 'utils/app_colors.dart';
 
@@ -70,6 +72,8 @@ class MyApp extends StatelessWidget {
         MyRoutes.homepageRoute: (context) => Dashboard(),
         MyRoutes.splashRoute: (context) => SplashScreen(),
         MyRoutes.mapsRoute: (context) => MapScreen(),
+        MyRoutes.automaticRoute: (context) => AutomaticTrigger(),
+        MyRoutes.slotRoute: (context) => SlotLot(),
       },
     );
   }

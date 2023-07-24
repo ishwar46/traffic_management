@@ -9,4 +9,6 @@ class MyRoutes {
   static const String changepassRoute = "/changepassRoute";
   static const String emergencyRoute = "/emergencyRoute";
   static const String mapsRoute = "/mapsRoute";
+  static const String automaticRoute = "/automaticRoute";
+  static const String slotRoute = "/slotRoute";
 }
