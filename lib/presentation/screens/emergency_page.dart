@@ -60,12 +60,7 @@ class _ModePageState extends State<ModePage> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text('Feature Under Development'),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/automaticRoute');
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
