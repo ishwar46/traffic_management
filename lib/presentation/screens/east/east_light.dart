@@ -162,6 +162,7 @@ class _EastLightState extends State<EastLight> {
                       _isRedOn = false;
                     }
                     _postLightStatusToDatabase();
+                    //_startTimer();
                   });
                 },
               ),

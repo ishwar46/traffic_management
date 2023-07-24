@@ -121,6 +121,38 @@ class _ModePageState extends State<ModePage> {
                     ),
                   ),
                 ),
+                SizedBox(width: 20),
+                Card(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/mapsRoute');
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/img/live.png",
+                          height: 100,
+                        ),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        Text(
+                          "LIVE TRAFFIC",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.0,
+                              fontFamily: GoogleFonts.nunito().fontFamily),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ],

@@ -12,7 +12,7 @@
 // }
 
 // class _PostScreenState extends State<PostScreen> {
-//   final ref = FirebaseDatabase.instance.ref('traffic_lights');
+//   final ref = FirebaseDatabase.instance.ref('traffic_lights'); TTHIW UW THE ODE FOR THE THE C
 
 //   @override
 //   void initState() {

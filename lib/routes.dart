@@ -8,4 +8,5 @@ class MyRoutes {
   static const String onboardingRoute = "/onboardingRoute";
   static const String changepassRoute = "/changepassRoute";
   static const String emergencyRoute = "/emergencyRoute";
+  static const String mapsRoute = "/mapsRoute";
 }
