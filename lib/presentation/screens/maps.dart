@@ -49,8 +49,8 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
-          target: LatLng(27.6915, 85.3420),
-          zoom: 12.0,
+          target: LatLng(27.7062762, 85.3301396),
+          zoom: 18.0,
         ),
         onMapCreated: (GoogleMapController controller) {
           _controller = controller;

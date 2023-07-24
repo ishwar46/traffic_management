@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class ModePage extends StatefulWidget {
   const ModePage({Key? key}) : super(key: key);
@@ -22,24 +23,25 @@ class _ModePageState extends State<ModePage> {
   //     ),
   //   );
   // }
-  void showSuccessMessage(String message) {
-    showDialog(
+  void showinfo(BuildContext context) {
+    AwesomeDialog dialog = AwesomeDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Success"),
-          content: Text(message),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
+      dialogType: DialogType.info,
+      headerAnimationLoop: false,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      closeIcon: const Icon(Icons.close),
+      title: 'Manual Mode',
+      desc: 'You have entered manual mode',
+      onDismissCallback: (type) {
+        debugPrint('Dialog Dismiss from callback $type');
       },
     );
+
+    dialog.show();
+    Future.delayed(Duration(seconds: 1), () {
+      dialog.dismiss();
+    });
   }
 
   @override
@@ -92,7 +94,7 @@ class _ModePageState extends State<ModePage> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      showSuccessMessage("Successfully entered manual mode");
+                      showinfo(context);
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
