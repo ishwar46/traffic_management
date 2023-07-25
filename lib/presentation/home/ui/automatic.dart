@@ -16,7 +16,12 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
 
   void _sendCommand(String state) async {
     if (state == 'true' && automaticModeActive) {
-      print('error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Automatic mode is already active'),
+          duration: Duration(seconds: 2),
+        ),
+      );
       return;
     }
 
@@ -33,7 +38,7 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
     AwesomeDialog dialog = AwesomeDialog(
       context: context,
       dialogType: DialogType.info,
-      headerAnimationLoop: true,
+      headerAnimationLoop: false,
       animType: AnimType.topSlide,
       showCloseIcon: true,
       closeIcon: const Icon(Icons.close),
@@ -43,6 +48,7 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
         debugPrint('Dialog Dismiss from callback $type');
       },
     );
+
     dialog.show();
     Future.delayed(Duration(seconds: 2), () {
       dialog.dismiss();
@@ -63,6 +69,7 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
         debugPrint('Dialog Dismiss from callback $type');
       },
     );
+
     dialog.show();
     Future.delayed(Duration(seconds: 2), () {
       dialog.dismiss();
