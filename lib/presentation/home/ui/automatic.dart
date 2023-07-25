@@ -1,8 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
-import 'package:http/http.dart' as http;
-
-import '../../../utils/app_colors.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:trafficnepal/utils/app_colors.dart';
 
 class AutomaticTrigger extends StatefulWidget {
   @override
@@ -10,17 +10,63 @@ class AutomaticTrigger extends StatefulWidget {
 }
 
 class _AutomaticTriggerState extends State<AutomaticTrigger> {
-  final String serverUrl = "";
+  final DatabaseReference _commandRef =
+      FirebaseDatabase.instance.ref().child('automatic');
+  bool automaticModeActive = false;
 
-  Future<void> _sendCommand(String command) async {
-    final url = Uri.parse("$serverUrl/control");
-    final response = await http.post(
-      url,
-      body: {"command": command},
+  void _sendCommand(String state) async {
+    if (state == 'true' && automaticModeActive) {
+      print('error');
+      return;
+    }
+
+    await _commandRef.set({"state": state});
+
+    if (state == 'true') {
+      automaticModeActive = true;
+    } else {
+      automaticModeActive = false;
+    }
+  }
+
+  void showInfo(BuildContext context) {
+    AwesomeDialog dialog = AwesomeDialog(
+      context: context,
+      dialogType: DialogType.info,
+      headerAnimationLoop: true,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      closeIcon: const Icon(Icons.close),
+      title: 'Automatic Mode',
+      desc: 'You have started automatic mode',
+      onDismissCallback: (type) {
+        debugPrint('Dialog Dismiss from callback $type');
+      },
     );
+    dialog.show();
+    Future.delayed(Duration(seconds: 2), () {
+      dialog.dismiss();
+    });
+  }
 
-    if (response.statusCode == 200) {
-    } else {}
+  void showCaution(BuildContext context) {
+    AwesomeDialog dialog = AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      headerAnimationLoop: false,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      closeIcon: const Icon(Icons.close),
+      title: 'Automatic Mode',
+      desc: 'You have stopped automatic mode',
+      onDismissCallback: (type) {
+        debugPrint('Dialog Dismiss from callback $type');
+      },
+    );
+    dialog.show();
+    Future.delayed(Duration(seconds: 2), () {
+      dialog.dismiss();
+    });
   }
 
   @override
@@ -38,7 +84,7 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
           color: AppColors.white,
         ),
         title: const Text(
-          "Automatic Mode",
+          "AUTOMATIC TRIGGER",
           style: TextStyle(
               color: AppColors.white,
               fontWeight: FontWeight.w500,
@@ -56,7 +102,14 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
                 alignment: Alignment.center,
                 child: RoundedButtonWithIcon(
                   onPressed: () {
-                    _sendCommand('start');
+                    if (!automaticModeActive) {
+                      _sendCommand('true');
+                      print('started');
+                      showInfo(context);
+                    } else {
+                      // Show a message to the user that the automatic mode is already active
+                      // For example, you can display a snackbar or another dialog to notify the user.
+                    }
                   },
                   icon: Icons.play_arrow,
                   title: "Start",
@@ -71,7 +124,9 @@ class _AutomaticTriggerState extends State<AutomaticTrigger> {
                 alignment: Alignment.center,
                 child: RoundedButtonWithIcon(
                   onPressed: () {
-                    _sendCommand('stop');
+                    _sendCommand('false');
+                    print('stopped');
+                    showCaution(context);
                   },
                   icon: Icons.stop,
                   title: "Stop",

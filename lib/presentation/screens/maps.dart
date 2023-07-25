@@ -56,6 +56,20 @@ class _MapScreenState extends State<MapScreen> {
           _controller = controller;
         },
         trafficEnabled: true,
+        myLocationEnabled: true,
+        myLocationButtonEnabled: true,
+        indoorViewEnabled: true,
+
+        // markers: {
+        //   const Marker(
+        //     markerId: MarkerId('1'),
+        //     position: LatLng(27.7062762, 85.3301396),
+        //     infoWindow: InfoWindow(
+        //       title: 'Ishwar Chaudhary',
+        //       snippet: 'This is my location',
+        //     ),
+        //   ),
+        // },
       ),
     );
   }
