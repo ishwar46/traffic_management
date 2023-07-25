@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 FadeTransition(
                   opacity: _fadeAnimation,
-                  child: Text(
+                  child: const Text(
                     'Powered by',
                     style: TextStyle(fontSize: 16),
                   ),
