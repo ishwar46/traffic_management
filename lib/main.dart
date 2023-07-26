@@ -10,6 +10,7 @@ import 'package:trafficnepal/presentation/OnBoarding/onboarding_screen.dart';
 import 'package:trafficnepal/presentation/home/splash_screen.dart';
 import 'package:trafficnepal/presentation/home/ui/automatic.dart';
 import 'package:trafficnepal/presentation/home/ui/home_page.dart';
+import 'package:trafficnepal/presentation/screens/camera_data_screen.dart';
 import 'package:trafficnepal/presentation/screens/maps.dart';
 import 'package:trafficnepal/routes.dart';
 import 'package:trafficnepal/utils/theme.dart';
@@ -74,6 +75,7 @@ class MyApp extends StatelessWidget {
         MyRoutes.mapsRoute: (context) => MapScreen(),
         MyRoutes.automaticRoute: (context) => AutomaticTrigger(),
         MyRoutes.slotRoute: (context) => SlotLot(),
+        MyRoutes.cameraRoute: (context) => RealtimeDataScreen(),
       },
     );
   }

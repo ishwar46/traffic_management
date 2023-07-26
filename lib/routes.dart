@@ -11,4 +11,5 @@ class MyRoutes {
   static const String mapsRoute = "/mapsRoute";
   static const String automaticRoute = "/automaticRoute";
   static const String slotRoute = "/slotRoute";
+  static const String cameraRoute = "/cameraRoute";
 }

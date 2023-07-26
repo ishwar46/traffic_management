@@ -58,6 +58,13 @@ class DrawerWidget extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.camera_sharp),
+            title: const Text('Camera Data'),
+            onTap: () {
+              Navigator.pushNamed(context, '/cameraRoute');
+            },
+          ),
         ],
       ),
     );
