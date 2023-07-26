@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
         MyRoutes.mapsRoute: (context) => MapScreen(),
         MyRoutes.automaticRoute: (context) => AutomaticTrigger(),
         MyRoutes.slotRoute: (context) => SlotLot(),
-        MyRoutes.cameraRoute: (context) => RealtimeDataScreen(),
+        //MyRoutes.cameraRoute: (context) => RealtimeDataScreen(),
       },
     );
   }
