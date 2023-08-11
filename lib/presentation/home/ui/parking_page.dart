@@ -23,7 +23,7 @@ class _SlotLot extends State<SlotLot> {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         setState(() {
-          slotStatus = 'Slot Left: ${response.body}';
+          slotStatus = 'Remaining Slot: ${response.body}';
         });
       } else {
         setState(() {
