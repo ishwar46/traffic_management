@@ -23,4 +23,4 @@ def store_in_firebase(collection, data_to_store):
         cctv_data_ref = db.reference(collection)
         doc_ref = cctv_data_ref.push(data_to_store)
     except Exception as e:
-        print("Error while storing cctv record", e)
+        print("Error while preserving cctv record", e)
