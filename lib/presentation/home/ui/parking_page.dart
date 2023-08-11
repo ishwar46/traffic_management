@@ -45,7 +45,7 @@ class _SlotLot extends State<SlotLot> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Urban Parking',
+              'Urban Flow Parking',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
