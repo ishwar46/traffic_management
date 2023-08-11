@@ -40,26 +40,6 @@ class _SlotLot extends State<SlotLot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: AppColors.primaryColor,
-      //   automaticallyImplyLeading: false,
-      //   leading: IconButton(
-      //     icon: Icon(Icons.arrow_back_ios),
-      //     onPressed: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //     color: AppColors.white,
-      //   ),
-      //   title: const Text(
-      //     "SLOT LOT",
-      //     style: TextStyle(
-      //         color: AppColors.white,
-      //         fontWeight: FontWeight.w500,
-      //         fontFamily: "nunito"),
-      //   ),
-      //   centerTitle: true,
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
