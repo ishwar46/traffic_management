@@ -57,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
           IconButton(
             icon: const Icon(Icons.logout_rounded),
             onPressed: () {
-              _logout(context);
+              _logout_alert(context);
             },
           ),
         ],
@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
   }
 }
 
-void _logout(BuildContext context) {
+void _logout_alert(BuildContext context) {
   AwesomeDialog(
     context: context,
     dialogType: DialogType.warning,
@@ -77,7 +77,7 @@ void _logout(BuildContext context) {
     showCloseIcon: true,
     closeIcon: const Icon(Icons.close),
     title: 'Logout',
-    desc: 'Are You Sure Want To Logout?',
+    desc: 'Do you want to logout?',
     btnCancelOnPress: () {},
     onDismissCallback: (type) {
       debugPrint('Dialog Dismiss from callback $type');
